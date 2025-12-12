@@ -39,3 +39,17 @@ model MenuItem {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }
+
+model Order {
+  id           String      @id @default(cuid())
+  status       String      @default("Dalam perjalanan")
+  total        Int
+  orderDate    DateTime    @default(now())
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       String?
+  orderItems   OrderItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
