@@ -9,3 +9,6 @@ const schema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
+
+// Mengambil JWT secret dari environment
+const getJwtSecret = () => process.env.JWT_SECRET || 'dev-secret';
