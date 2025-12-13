@@ -51,5 +51,22 @@ export default function Home() {
     );
   }
 
+  return (
+    <div>
+      <section className="relative mb-8 h-64 md:h-80 w-full">
+        <Image
+          src={heroImageUrl}
+          alt={heroImage?.description ?? 'Makanan'}
+          fill
+          className="object-cover"
+          priority
+          data-ai-hint={heroImage?.imageHint}
+        />
+        <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center text-white p-4">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight font-headline">Wargital</h1>
+          <p className="mt-2 text-lg md:text-xl max-w-2xl">Rasa otentik masakan rumahan Indonesia, diantar langsung ke depan pintu Anda.</p>
+        </div>
+      </section>
+
 
 }
