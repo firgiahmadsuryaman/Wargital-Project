@@ -15,4 +15,7 @@ export async function GET() {
     ...restaurant,
     menu: restaurant.menuItems,
   }));
+
+   // Return daftar restoran
+   return NextResponse.json(mapped); 
 }
