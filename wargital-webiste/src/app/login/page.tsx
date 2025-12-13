@@ -51,5 +51,26 @@ export default function LoginPage() {
     }
   }, [user, isUserLoading, router]);
 
- 
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    try {
+      await login(values.email, values.password);
+      toast({
+        title: 'Masuk Berhasil',
+        description: 'Selamat datang kembali!',
+      });
+      router.push('/');
+    } catch (error: unknown) {
+      const description = (error as { response?: { data?: { message?: string } } })?.response?.data?.message ?? "Terjadi kesalahan saat masuk. Silakan coba lagi.";
+      toast({
+        variant: 'destructive',
+        title: 'Gagal Masuk',
+        description,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  
 }
