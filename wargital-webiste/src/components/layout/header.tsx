@@ -34,4 +34,5 @@ export default function Header() {
      const { itemCount } = useCart();
 
      const { user, isUserLoading, logout } = useAuth();
+      const handleSignOut = () => logout();
   };
