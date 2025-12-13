@@ -22,3 +22,13 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 
+const formSchema = z.object({
+  email: z.string().email({
+    message: 'Harap masukkan alamat email yang valid.',
+  }),
+  password: z.string().min(6, {
+    message: 'Kata sandi minimal harus 6 karakter.',
+  }),
+});
+
+
