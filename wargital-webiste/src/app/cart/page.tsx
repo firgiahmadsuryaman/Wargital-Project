@@ -33,4 +33,42 @@ export default function CartPage() {
     void loadRestaurant();
   }, []);
 
+const handlePlaceOrder = async () => {
+    if (!user) {
+        toast({
+            variant: "destructive",
+            title: "Anda harus masuk",
+            description: "Silakan masuk untuk membuat pesanan.",
+        });
+        router.push('/login');
+        return;
+    }
+    if (!restaurantId) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Restoran tidak ditemukan. Silakan coba lagi.",
+      });
+      return;
+    }
+    try {
+      setIsSubmitting(true);
+      await createOrder({ restaurantId, items: cartItems, userId: user.id });
+      toast({
+        title: "Pesanan Dibuat!",
+        description: "Makanan Anda sedang dalam perjalanan. Lacak di 'Pesanan Saya'.",
+      });
+      clearCart();
+      router.push('/orders');
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "Pesanan Gagal",
+        description: "Terjadi kesalahan. Silakan coba lagi.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
