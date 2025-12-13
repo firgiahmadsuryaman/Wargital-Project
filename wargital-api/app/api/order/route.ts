@@ -90,3 +90,22 @@ export async function POST(request: Request) {
     const menuItem = menuItems.find((m) => m.id === item.menuItemId)!;
     return sum + menuItem.price * item.quantity;
   }, 0); 
+
+    const order = await prisma.order.create({
+    data: {
+      restaurantId,
+      status: 'Dalam perjalanan',
+      total,
+      userId,
+      orderItems: {
+        create: items.map((item) => ({
+          quantity: item.quantity,
+          menuItemId: item.menuItemId,
+        })),
+      },
+    },
+    include: {
+      restaurant: true,
+      orderItems: { include: { menuItem: true } },
+    },
+  }); // Simpan order dan order items ke database
