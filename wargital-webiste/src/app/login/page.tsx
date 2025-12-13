@@ -22,4 +22,34 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 
+const formSchema = z.object({
+  email: z.string().email({
+    message: 'Harap masukkan alamat email yang valid.',
+  }),
+  password: z.string().min(1, {
+    message: 'Kata sandi tidak boleh kosong.',
+  }),
+});
 
+export default function LoginPage() {
+  const { toast } = useToast();
+  const { user, isUserLoading, login } = useAuth();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  useEffect(() => {
+    if (!isUserLoading && user) {
+      router.push('/profile');
+    }
+  }, [user, isUserLoading, router]);
+
+ 
+}
