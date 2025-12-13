@@ -7,3 +7,8 @@ type Params = {
     id: string;
   };
 };
+
+// Handler GET untuk mengambil detail restoran berdasarkan ID
+export async function GET(_: Request, { params }: Params) {
+
+}
