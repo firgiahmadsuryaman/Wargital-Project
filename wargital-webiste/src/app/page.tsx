@@ -90,5 +90,23 @@ export default function Home() {
             </div>
           </div>
           
-
+          {filteredMenu.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredMenu.map((item) => (
+                <MenuItemCard key={item.id} item={item} />
+              ))}
+            </div>
+          ) : (
+             <div className="flex flex-col items-center justify-center text-center border-2 border-dashed border-border rounded-lg p-12 min-h-[20rem]">
+              <Search className="h-24 w-24 text-muted-foreground" />
+              <h2 className="mt-6 text-2xl font-semibold">Menu Tidak Ditemukan</h2>
+              <p className="mt-2 text-muted-foreground">
+                Tidak ada menu yang cocok dengan pencarian &quot;{searchQuery}&quot;.
+              </p>
+            </div>
+          )}
+        </section>
+      </div>
+    </div>
+  );
 }
