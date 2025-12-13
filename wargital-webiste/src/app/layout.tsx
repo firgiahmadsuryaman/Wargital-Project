@@ -7,3 +7,9 @@ import { AuthProvider } from '@/context/auth-context';
 import { FavoritesProvider } from '@/context/favorites-context';
 import Header from '@/components/layout/header';
 
+export const metadata: Metadata = {
+  title: 'Wargital',
+  description: 'Rasa masakan rumah, diantar ke pintu Anda.',
+};
+
+
