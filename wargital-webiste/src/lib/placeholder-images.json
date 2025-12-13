@@ -1,0 +1,64 @@
+{
+  "placeholderImages": [
+    {
+      "id": "restaurant-1",
+      "description": "Interior of a modern Indonesian restaurant",
+      "imageUrl": "/images/restaurants/restaurant-1.jpg",
+      "imageHint": "restaurant interior"
+    },
+    {
+      "id": "restaurant-2",
+      "description": "A bustling local food stall",
+      "imageUrl": "/images/restaurants/restaurant-2.jpg",
+      "imageHint": "food stall"
+    },
+    {
+      "id": "restaurant-3",
+      "description": "A cozy cafe with warm lighting",
+      "imageUrl": "/images/restaurants/restaurant-3.jpg",
+      "imageHint": "cafe interior"
+    },
+    {
+      "id": "food-1",
+      "description": "A plate of Nasi Goreng",
+      "imageUrl": "/images/food/nasi-goreng.jpg",
+      "imageHint": "fried rice"
+    },
+    {
+      "id": "food-2",
+      "description": "A bowl of chicken satay",
+      "imageUrl": "/images/food/sate-ayam.jpg",
+      "imageHint": "chicken satay"
+    },
+    {
+      "id": "food-3",
+      "description": "A plate of beef rendang",
+      "imageUrl": "/images/food/rendang.jpg",
+      "imageHint": "beef rendang"
+    },
+    {
+      "id": "food-4",
+      "description": "Gado-gado salad",
+      "imageUrl": "/images/food/gado-gado.jpg",
+      "imageHint": "indonesian salad"
+    },
+    {
+      "id": "food-5",
+      "description": "A bowl of soto ayam",
+      "imageUrl": "/images/food/soto-ayam.jpg",
+      "imageHint": "chicken soup"
+    },
+    {
+      "id": "food-6",
+      "description": "Ikan Bakar, grilled fish",
+      "imageUrl": "/images/food/ikan-bakar.jpg",
+      "imageHint": "grilled fish"
+    },
+    {
+      "id": "hero-1",
+      "description": "A vibrant spread of Indonesian dishes",
+      "imageUrl": "/images/hero/hero-1.jpg",
+      "imageHint": "indonesian food"
+    }
+  ]
+}
