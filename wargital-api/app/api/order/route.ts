@@ -71,3 +71,8 @@ export async function POST(request: Request) {
   const menuItems = await prisma.menuItem.findMany({
     where: { id: { in: items.map((i) => i.menuItemId) } },
   }); 
+
+  // Cek menu item yang tidak ditemukan
+  const missing = items.filter(
+    (item) => !menuItems.find((m) => m.id === item.menuItemId)
+  ); 
