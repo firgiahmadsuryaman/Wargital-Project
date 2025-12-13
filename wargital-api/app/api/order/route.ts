@@ -32,3 +32,21 @@ function getUserIdFromRequest(request: Request): string | null {
     return null;
   }
 }
+
+// Handler GET untuk mengambil daftar order
+export async function GET(request: Request) {
+  const userId = getUserIdFromRequest(request); 
+  
+  const orders = await prisma.order.findMany({
+    where: userId ? { userId } : undefined,
+    include: {
+      restaurant: true,
+      orderItems: {
+        include: { menuItem: true },
+      },
+    },
+    orderBy: { orderDate: 'desc' },
+  });
+
+  return NextResponse.json(orders);
+}
