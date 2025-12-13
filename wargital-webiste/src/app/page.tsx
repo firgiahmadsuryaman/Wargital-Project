@@ -68,5 +68,27 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="container mx-auto px-4 md:px-6 py-8">
+        <section>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-2 font-headline">Menu Unggulan</h2>
+              <div className="flex items-center text-lg text-muted-foreground">
+                  <MapPin className="mr-2 h-5 w-5 text-primary" />
+                  <span>{restaurant.distance} dari lokasi Anda</span>
+              </div>
+            </div>
+            <div className="relative mt-4 md:mt-0 w-full md:max-w-xs">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Cari menu..."
+                className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+          
 
 }
