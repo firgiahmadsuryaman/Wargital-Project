@@ -62,3 +62,7 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+
+  const userIdFromToken = getUserIdFromRequest(request); // Ambil userId dari token
+  const { restaurantId, items, userId: userIdFromBody } = parsed.data; // Ambil data valid
+  const userId = userIdFromToken || userIdFromBody; // Prioritaskan userId dari token
