@@ -109,3 +109,7 @@ export async function POST(request: Request) {
       orderItems: { include: { menuItem: true } },
     },
   }); // Simpan order dan order items ke database
+
+  // Return order yang berhasil dibuat
+  return NextResponse.json(order, { status: 201 }); 
+}
