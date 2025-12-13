@@ -51,5 +51,26 @@ export default function RegisterPage() {
     }
   }, [user, isUserLoading, router]);
 
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    try {
+      await register(values.email, values.password);
+      toast({
+        title: 'Pendaftaran Berhasil',
+        description: 'Akun Anda telah dibuat. Anda sekarang sudah masuk.',
+      });
+      router.push('/');
+    } catch (error: unknown) {
+      const description = (error as { response?: { data?: { message?: string } } })?.response?.data?.message ?? "Terjadi kesalahan saat pendaftaran. Silakan coba lagi.";
+      toast({
+        variant: 'destructive',
+        title: 'Pendaftaran Gagal',
+        description,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  
 
 }
