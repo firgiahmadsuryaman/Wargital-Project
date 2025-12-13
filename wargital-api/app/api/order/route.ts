@@ -17,3 +17,18 @@ const orderSchema = z.object({
 
 // Mengambil JWT secret dari environment
 const getJwtSecret = () => process.env.JWT_SECRET || 'dev-secret';
+
+// Mengambil userId dari token Authorization
+function getUserIdFromRequest(request: Request): string | null {
+  const authHeader = request.headers.get('authorization'); 
+  if (!authHeader?.startsWith('Bearer ')) {
+    return null; // Tidak ada token
+  }
+  const token = authHeader.replace('Bearer ', ''); 
+  try {
+    const payload = jwt.verify(token, getJwtSecret()) as { sub: string }; 
+    return payload.sub; 
+  } catch {
+    return null;
+  }
+}
