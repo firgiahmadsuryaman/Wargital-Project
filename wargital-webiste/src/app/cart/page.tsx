@@ -71,4 +71,25 @@ const handlePlaceOrder = async () => {
     }
   };
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price);
+  };
+  
+  if (!isUserLoading && !user) {
+    router.push('/login');
+    return null;
+  }
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="container mx-auto px-4 md:px-6 py-12 flex flex-col items-center justify-center text-center min-h-[calc(100vh-10rem)]">
+        <ShoppingCart className="h-24 w-24 text-muted-foreground" />
+        <h1 className="mt-6 text-3xl font-bold">Keranjang Anda Kosong</h1>
+        <p className="mt-2 text-muted-foreground">Sepertinya Anda belum menambahkan apa pun ke keranjang Anda.</p>
+        <Button asChild className="mt-6">
+          <Link href="/">Kembali ke Menu</Link>
+        </Button>
+      </div>
+    );
+  }
 
