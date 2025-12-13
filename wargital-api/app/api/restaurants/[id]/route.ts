@@ -10,5 +10,10 @@ type Params = {
 
 // Handler GET untuk mengambil detail restoran berdasarkan ID
 export async function GET(_: Request, { params }: Params) {
+    // Ambil data restoran beserta menu
+    const restaurant = await prisma.restaurant.findUnique({
+    where: { id: params.id },
+    include: { menuItems: true },
+  });
 
 }
