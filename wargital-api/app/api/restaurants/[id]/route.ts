@@ -24,4 +24,9 @@ export async function GET(_: Request, { params }: Params) {
     ); 
   }
 
+// Return detail restoran
+  return NextResponse.json({
+    ...restaurant,
+    menu: restaurant.menuItems,
+  });
 }
