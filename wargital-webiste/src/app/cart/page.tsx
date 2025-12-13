@@ -93,3 +93,95 @@ const handlePlaceOrder = async () => {
     );
   }
 
+  return (
+    <div className="container mx-auto px-4 md:px-6 py-8">
+      <h1 className="text-3xl font-bold mb-6 font-headline">Tinjau Pesanan Anda</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Isi Keranjang</CardTitle>
+            </CardHeader>
+            <CardContent className="divide-y divide-border">
+              {cartItems.map((item) => {
+                const imageUrl = item.image || FALLBACK_IMAGES.food;
+                return (
+                <div key={item.id} className="flex items-center gap-4 py-4">
+                  <Image
+                    src={imageUrl}
+                    alt={item.name}
+                    width={80}
+                    height={80}
+                    className="rounded-md object-cover"
+                  />
+                  <div className="flex-grow">
+                    <p className="font-semibold">{item.name}</p>
+                    <p className="text-sm text-muted-foreground">{formatPrice(item.price)}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    >
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center">{item.quantity}</span>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <p className="w-24 text-right font-semibold">{formatPrice(item.price * item.quantity)}</p>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                    onClick={() => removeFromCart(item.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+                );
+              })}
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="lg:col-span-1">
+          <Card className="sticky top-24">
+            <CardHeader>
+              <CardTitle>Ringkasan Pesanan</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>{formatPrice(cartTotal)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Biaya Pengiriman</span>
+                <span>{formatPrice(5000)}</span>
+              </div>
+              <Separator />
+              <div className="flex justify-between font-bold text-lg">
+                <span>Total</span>
+                <span>{formatPrice(cartTotal + 5000)}</span>
+              </div>
+            </CardContent>
+            <CardFooter>
+            <Button className="w-full" onClick={handlePlaceOrder} disabled={isSubmitting}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isSubmitting ? 'Membuat Pesanan...' : 'Buat Pesanan'}
+            </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
