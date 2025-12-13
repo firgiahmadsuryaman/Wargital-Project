@@ -76,3 +76,11 @@ export async function POST(request: Request) {
   const missing = items.filter(
     (item) => !menuItems.find((m) => m.id === item.menuItemId)
   ); 
+
+  // Jika ada menu item yang tidak ada
+  if (missing.length) {
+    return NextResponse.json(
+      { message: 'Beberapa item tidak ditemukan', missing },
+      { status: 404 }
+    ); 
+  }
