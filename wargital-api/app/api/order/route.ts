@@ -14,3 +14,6 @@ const orderSchema = z.object({
     })
   ),
 });
+
+// Mengambil JWT secret dari environment
+const getJwtSecret = () => process.env.JWT_SECRET || 'dev-secret';
