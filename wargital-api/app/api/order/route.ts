@@ -84,3 +84,9 @@ export async function POST(request: Request) {
       { status: 404 }
     ); 
   }
+
+  // Hitung total harga order
+  const total = items.reduce((sum, item) => {
+    const menuItem = menuItems.find((m) => m.id === item.menuItemId)!;
+    return sum + menuItem.price * item.quantity;
+  }, 0); 
