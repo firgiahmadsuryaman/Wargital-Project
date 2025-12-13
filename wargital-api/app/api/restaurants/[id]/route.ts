@@ -16,4 +16,12 @@ export async function GET(_: Request, { params }: Params) {
     include: { menuItems: true },
   });
 
+  // Jika restoran tidak ditemukan
+   if (!restaurant) {
+    return NextResponse.json(
+      { message: 'Restoran tidak ditemukan' },
+      { status: 404 }
+    ); 
+  }
+
 }
