@@ -9,4 +9,10 @@ export async function GET() {
     include: { menuItems: true },
     orderBy: { name: 'asc' },
   }); 
+
+   // Mapping menuItems menjadi menu
+  const mapped = restaurants.map((restaurant) => ({
+    ...restaurant,
+    menu: restaurant.menuItems,
+  }));
 }
