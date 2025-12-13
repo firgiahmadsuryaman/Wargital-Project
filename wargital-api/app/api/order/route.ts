@@ -66,3 +66,8 @@ export async function POST(request: Request) {
   const userIdFromToken = getUserIdFromRequest(request); // Ambil userId dari token
   const { restaurantId, items, userId: userIdFromBody } = parsed.data; // Ambil data valid
   const userId = userIdFromToken || userIdFromBody; // Prioritaskan userId dari token
+
+  // Ambil data menu item dari database
+  const menuItems = await prisma.menuItem.findMany({
+    where: { id: { in: items.map((i) => i.menuItemId) } },
+  }); 
