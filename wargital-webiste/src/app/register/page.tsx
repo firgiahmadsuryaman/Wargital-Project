@@ -72,5 +72,12 @@ export default function RegisterPage() {
     }
   }
   
+  if (isUserLoading || user) {
+    return (
+      <div className="flex h-full min-h-[calc(100vh-10rem)] w-full items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    );
+  }
 
 }
