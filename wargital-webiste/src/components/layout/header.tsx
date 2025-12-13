@@ -27,3 +27,7 @@ const navLinks = [
   { href: '/orders', label: 'Pesanan', icon: Package },
   { href: '/favorites', label: 'Favorit', icon: Heart },
 ];
+
+// Komponen header aplikasi
+export default function Header() {
+  };
