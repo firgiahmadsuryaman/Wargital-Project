@@ -30,4 +30,5 @@ const navLinks = [
 
 // Komponen header aplikasi
 export default function Header() {
+     const pathname = usePathname();
   };
