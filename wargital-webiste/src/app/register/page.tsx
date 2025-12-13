@@ -31,4 +31,25 @@ const formSchema = z.object({
   }),
 });
 
+export default function RegisterPage() {
+  const { toast } = useToast();
+  const { user, isUserLoading, register } = useAuth();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  useEffect(() => {
+    if (!isUserLoading && user) {
+      router.push('/profile');
+    }
+  }, [user, isUserLoading, router]);
+
+
+}
