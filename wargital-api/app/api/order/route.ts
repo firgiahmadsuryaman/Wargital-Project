@@ -50,3 +50,15 @@ export async function GET(request: Request) {
 
   return NextResponse.json(orders);
 }
+
+// Handler POST untuk membuat order baru
+export async function POST(request: Request) {
+  const json = await request.json(); 
+  const parsed = orderSchema.safeParse(json); 
+
+  if (!parsed.success) {
+    return NextResponse.json(
+      { message: 'Payload tidak valid', issues: parsed.error.issues },
+      { status: 400 }
+    );
+  }
