@@ -34,5 +34,10 @@ export default function Header() {
      const { itemCount } = useCart();
 
      const { user, isUserLoading, logout } = useAuth();
-      const handleSignOut = () => logout();
-  };
+     const handleSignOut = () => logout();
+
+     // Mengambil inisial user dari email
+     const getInitials = (email: string | null | undefined) => {
+    if (!email) return 'U';
+    return email.charAt(0).toUpperCase();
+  };``
