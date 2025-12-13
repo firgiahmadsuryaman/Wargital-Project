@@ -20,3 +20,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+
+// Daftar navigasi utama
+const navLinks = [
+  { href: '/', label: 'Beranda', icon: Home },
+  { href: '/orders', label: 'Pesanan', icon: Package },
+  { href: '/favorites', label: 'Favorit', icon: Heart },
+];
