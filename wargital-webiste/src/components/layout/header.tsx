@@ -32,4 +32,6 @@ const navLinks = [
 export default function Header() {
      const pathname = usePathname();
      const { itemCount } = useCart();
+
+     const { user, isUserLoading, logout } = useAuth();
   };
