@@ -1,65 +1,129 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 
 export default function Home() {
+  const [logs, setLogs] = useState<string[]>([]);
+  const [token, setToken] = useState("");
+  const [authData, setAuthData] = useState({ email: "user@example.com", password: "password123" });
+
+  const addLog = (msg: string) => setLogs((prev) => [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev]);
+
+  const testEndpoint = async (url: string, method = "GET", body?: any, useToken = false) => {
+    addLog(`Testing ${method} ${url}...`);
+    try {
+      const headers: any = { "Content-Type": "application/json" };
+      if (useToken && token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const res = await fetch(url, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+      });
+
+      const data = await res.json();
+      addLog(`Status: ${res.status}`);
+      addLog(`Response: ${JSON.stringify(data, null, 2)}`);
+
+      if (url.includes("login") || url.includes("register")) {
+        if (data.token) {
+          setToken(data.token);
+          addLog("Token saved for future requests.");
+        }
+      }
+    } catch (err: any) {
+      addLog(`Error: ${err.message}`);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="p-8 font-sans max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Wargital API Tester</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-6">
+          <section className="p-4 border rounded shadow-sm">
+            <h2 className="font-semibold mb-2">1. Health Check</h2>
+            <button
+              onClick={() => testEndpoint("/api/health")}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Test /api/health
+            </button>
+          </section>
+
+          <section className="p-4 border rounded shadow-sm">
+            <h2 className="font-semibold mb-2">2. Auth (Register/Login)</h2>
+            <div className="flex flex-col gap-2 mb-2">
+              <input
+                type="email"
+                value={authData.email}
+                onChange={(e) => setAuthData({ ...authData, email: e.target.value })}
+                className="border p-1 rounded"
+                placeholder="Email"
+              />
+              <input
+                type="password"
+                value={authData.password}
+                onChange={(e) => setAuthData({ ...authData, password: e.target.value })}
+                className="border p-1 rounded"
+                placeholder="Password"
+              />
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => testEndpoint("/api/auth/register", "POST", authData)}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              >
+                Register
+              </button>
+              <button
+                onClick={() => testEndpoint("/api/auth/login", "POST", authData)}
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+              >
+                Login
+              </button>
+            </div>
+            {token && <p className="text-xs text-green-600 mt-2">Token active!</p>}
+          </section>
+
+          <section className="p-4 border rounded shadow-sm">
+            <h2 className="font-semibold mb-2">3. Restaurants</h2>
+            <button
+              onClick={() => testEndpoint("/api/restaurants")}
+              className="px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Get Restaurants
+            </button>
+          </section>
+
+          <section className="p-4 border rounded shadow-sm">
+            <h2 className="font-semibold mb-2">4. Orders</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={() => testEndpoint("/api/order", "GET", undefined, true)}
+                className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+                disabled={!token}
+              >
+                Get My Orders (Need Token)
+              </button>
+            </div>
+          </section>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="bg-gray-100 p-4 rounded h-[600px] overflow-auto font-mono text-sm border-2 border-gray-300">
+          <h3 className="font-bold border-b pb-2 mb-2">Logs & Response</h3>
+          {logs.length === 0 && <p className="text-gray-400">No logs yet...</p>}
+          {logs.map((log, i) => (
+            <div key={i} className="mb-1 whitespace-pre-wrap break-words border-b border-gray-200 pb-1">
+              {log}
+            </div>
+          ))}
         </div>
-      </main>
+      </div>
     </div>
   );
 }

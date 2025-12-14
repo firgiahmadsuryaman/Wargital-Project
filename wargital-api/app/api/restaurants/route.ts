@@ -11,7 +11,7 @@ export async function GET() {
   }); 
 
    // Mapping menuItems menjadi menu
-  const mapped = restaurants.map((restaurant) => ({
+  const mapped = restaurants.map((restaurant: any) => ({
     ...restaurant,
     menu: restaurant.menuItems,
   }));

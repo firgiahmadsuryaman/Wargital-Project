@@ -74,7 +74,7 @@ export async function POST(request: Request) {
 
   // Cek menu item yang tidak ditemukan
   const missing = items.filter(
-    (item) => !menuItems.find((m) => m.id === item.menuItemId)
+    (item) => !menuItems.find((m: { id: string }) => m.id === item.menuItemId)
   ); 
 
   // Jika ada menu item yang tidak ada
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
 
   // Hitung total harga order
   const total = items.reduce((sum, item) => {
-    const menuItem = menuItems.find((m) => m.id === item.menuItemId)!;
+    const menuItem = menuItems.find((m: { id: string; price: number }) => m.id === item.menuItemId)!;
     return sum + menuItem.price * item.quantity;
   }, 0); 
 
