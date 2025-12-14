@@ -3,25 +3,33 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { getHeroImage, FALLBACK_IMAGES } from '@/lib/images';
-import MenuItemCard from '@/components/menu-item-card';
+import { PlaceHolderImages } from '../lib/placeholder-images';
+import { getHeroImage, FALLBACK_IMAGES } from '../lib/images';
+import MenuItemCard from '../components/menu-item-card';
 import { MapPin, Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import type { Restaurant } from '@/lib/types';
-import { fetchRestaurants } from '@/lib/data';
+import { Input } from '../components/ui/input';
+import type { Restaurant } from '../lib/types';
+import { fetchRestaurants } from '../lib/data';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const data = await fetchRestaurants();
-      setRestaurant(data[0] ?? null);
-      setIsLoading(false);
+      setError(null);
+      try {
+        const data = await fetchRestaurants();
+        setRestaurant(data[0] ?? null);
+      } catch (err: any) {
+        console.error("Failed to load restaurant data:", err);
+        setError("Gagal memuat data restoran. Pastikan server API berjalan.");
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     void loadData();
@@ -36,17 +44,36 @@ export default function Home() {
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [searchQuery, restaurant?.menu]);
-  
+
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-1');
   const heroImageUrl = heroImage?.imageUrl || getHeroImage('hero-1.jpg') || FALLBACK_IMAGES.hero;
 
-  if (isLoading || !restaurant) {
+  if (isLoading) {
     return (
       <div className="flex h-full min-h-[calc(100vh-10rem)] w-full items-center justify-center">
         <div className="flex flex-col items-center">
           <div className="h-10 w-10 rounded-full border-4 border-primary border-t-transparent animate-spin" />
           <p className="mt-4 text-muted-foreground">Memuat menu...</p>
         </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-full min-h-[calc(100vh-10rem)] w-full items-center justify-center">
+        <div className="flex flex-col items-center text-center p-6 border border-destructive/50 rounded-lg bg-destructive/10">
+          <h3 className="text-xl font-bold text-destructive mb-2">Terjadi Kesalahan</h3>
+          <p className="text-muted-foreground">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!restaurant) {
+    return (
+      <div className="flex h-full min-h-[calc(100vh-10rem)] w-full items-center justify-center">
+        <p className="text-muted-foreground">Restoran tidak ditemukan.</p>
       </div>
     );
   }
@@ -74,8 +101,8 @@ export default function Home() {
             <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-2 font-headline">Menu Unggulan</h2>
               <div className="flex items-center text-lg text-muted-foreground">
-                  <MapPin className="mr-2 h-5 w-5 text-primary" />
-                  <span>{restaurant.distance} dari lokasi Anda</span>
+                <MapPin className="mr-2 h-5 w-5 text-primary" />
+                <span>{restaurant.distance} dari lokasi Anda</span>
               </div>
             </div>
             <div className="relative mt-4 md:mt-0 w-full md:max-w-xs">
@@ -89,7 +116,7 @@ export default function Home() {
               />
             </div>
           </div>
-          
+
           {filteredMenu.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredMenu.map((item) => (
@@ -97,7 +124,7 @@ export default function Home() {
               ))}
             </div>
           ) : (
-             <div className="flex flex-col items-center justify-center text-center border-2 border-dashed border-border rounded-lg p-12 min-h-[20rem]">
+            <div className="flex flex-col items-center justify-center text-center border-2 border-dashed border-border rounded-lg p-12 min-h-[20rem]">
               <Search className="h-24 w-24 text-muted-foreground" />
               <h2 className="mt-6 text-2xl font-semibold">Menu Tidak Ditemukan</h2>
               <p className="mt-2 text-muted-foreground">

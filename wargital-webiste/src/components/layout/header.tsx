@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from '@/components/ui/sheet';
 
 // Daftar navigasi utama
 const navLinks = [
@@ -30,14 +30,14 @@ const navLinks = [
 
 // Komponen header aplikasi
 export default function Header() {
-     const pathname = usePathname();
-     const { itemCount } = useCart();
+  const pathname = usePathname();
+  const { itemCount } = useCart();
 
-     const { user, isUserLoading, logout } = useAuth();
-     const handleSignOut = () => logout();
+  const { user, isUserLoading, logout } = useAuth();
+  const handleSignOut = () => logout();
 
-     // Mengambil inisial user dari email
-     const getInitials = (email: string | null | undefined) => {
+  // Mengambil inisial user dari email
+  const getInitials = (email: string | null | undefined) => {
     if (!email) return 'U';
     return email.charAt(0).toUpperCase();
   };
@@ -63,6 +63,7 @@ export default function Header() {
                     <span className="font-bold">Wargital</span>
                   </Link>
                 </SheetClose>
+                <SheetTitle className="sr-only">Menu Navigasi</SheetTitle>
 
                 {/* Navigasi mobile */}
                 <nav className="flex flex-col gap-4">

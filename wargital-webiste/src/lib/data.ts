@@ -4,12 +4,13 @@ import type { CartItem, MenuItem, Order, Restaurant } from '@/lib/types';
 
 type ApiRestaurant = Restaurant & { menu: MenuItem[] };
 
+// Backend returns Order with different structure
 type ApiOrder = {
   id: string;
   status: string;
   total: number;
-  orderDate: string;
-  restaurant?: { name: string | null };
+  orderDate: string; // DateTime string
+  restaurant?: { name: string };
   orderItems: Array<{
     quantity: number;
     menuItem: MenuItem;
@@ -44,12 +45,14 @@ export async function fetchRestaurantById(id: string, isServer = false): Promise
 }
 
 export async function fetchOrders(): Promise<Order[]> {
-  const { data } = await apiClient.get<ApiOrder[]>('/orders');
+  // Correct endpoint is /order (based on route.ts in api/order)
+  const { data } = await apiClient.get<ApiOrder[]>('/order');
   return data.map(mapOrder);
 }
 
 export async function createOrder(payload: { restaurantId: string; items: CartItem[]; userId?: string }) {
-  const { data } = await apiClient.post<ApiOrder>('/orders', {
+  // Correct endpoint is /order
+  const { data } = await apiClient.post<ApiOrder>('/order', {
     restaurantId: payload.restaurantId,
     userId: payload.userId,
     items: payload.items.map((item) => ({

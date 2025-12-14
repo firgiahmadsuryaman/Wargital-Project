@@ -10,6 +10,7 @@
  * Mendapatkan URL lengkap untuk gambar dari folder public/images
  * @param path - Path relatif dari folder images (contoh: 'food/nasi-goreng.jpg')
  * @returns URL lengkap untuk digunakan di Next.js Image component
+ */
 export function getImageUrl(path: string): string {
   // Pastikan path dimulai dengan /images/
   if (path.startsWith('/images/')) {
@@ -22,9 +23,11 @@ export function getImageUrl(path: string): string {
   return path;
 }
 
+/**
  * Mendapatkan URL untuk gambar hero
  * @param filename - Nama file gambar (contoh: 'hero-1.jpg')
  * @returns URL lengkap
+ */
 export function getHeroImage(filename: string): string {
   return getImageUrl(`hero/${filename}`);
 }
