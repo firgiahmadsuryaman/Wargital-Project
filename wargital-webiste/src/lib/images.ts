@@ -70,9 +70,10 @@ export function getIconImage(filename: string): string {
 
 
 export const FALLBACK_IMAGES = {
-  food: '/images/food/placeholder.jpg',
-  restaurant: '/images/restaurants/placeholder.jpg',
-  hero: '/images/hero/placeholder.jpg',
-  avatar: '/images/avatars/default-avatar.jpg',
+  food: 'https://images.unsplash.com/photo-1546069901-ba9599b7e5a6?w=400&h=300&fit=crop',
+  restaurant: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop',
+  hero: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&h=600&fit=crop',
+  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
 } as const;
+
 

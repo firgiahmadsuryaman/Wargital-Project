@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from 'next/image';
@@ -6,7 +5,6 @@ import { PlusCircle, Heart } from 'lucide-react';
 import type { MenuItem } from '@/lib/types';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
@@ -59,38 +57,45 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
   const imageUrl = item.image || FALLBACK_IMAGES.food;
 
   return (
-    <Card className="flex flex-col h-full overflow-hidden transition-shadow hover:shadow-lg">
-       <CardHeader className="p-0 relative">
-        <div className="relative h-48 w-full">
-          <Image
-            src={imageUrl}
-            alt={item.name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            data-ai-hint={item.imageHint}
-          />
-        </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-background/70 hover:bg-background"
+    <div className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+      {/* Image */}
+      <div className="relative w-full h-44 overflow-hidden">
+        <Image
+          src={imageUrl}
+          alt={item.name}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          data-ai-hint={item.imageHint}
+        />
+        <button
+          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-sm"
           onClick={handleToggleFavorite}
         >
-          <Heart className={cn("h-5 w-5", isFavorite(item.id) ? "text-red-500 fill-red-500" : "text-foreground/80")} />
-        </Button>
-      </CardHeader>
-      <CardContent className="p-4 flex-grow">
-        <CardTitle className="text-lg font-bold font-headline">{item.name}</CardTitle>
-        <CardDescription className="mt-1 text-sm h-10 overflow-hidden text-ellipsis">{item.description}</CardDescription>
-      </CardContent>
-      <CardFooter className="p-4 pt-0 mt-auto flex justify-between items-center">
-        <p className="text-lg font-semibold text-primary">{formatPrice(item.price)}</p>
-        <Button onClick={handleAddToCart} size="sm">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Tambah
-        </Button>
-      </CardFooter>
-    </Card>
+          <Heart className={cn("h-4 w-4", isFavorite(item.id) ? "text-red-500 fill-red-500" : "text-gray-500")} />
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="p-4 flex flex-col flex-grow">
+        <h3 className="font-bold text-base text-foreground mb-1">{item.name}</h3>
+        <p className="text-xs text-muted-foreground line-clamp-2 mb-4 flex-grow">
+          {item.description}
+        </p>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between mt-auto">
+          <span className="text-primary font-bold text-base">{formatPrice(item.price)}</span>
+          <Button
+            onClick={handleAddToCart}
+            size="sm"
+            className="bg-primary hover:bg-primary/90 text-white rounded-md px-3 py-1 text-xs h-8"
+          >
+            <PlusCircle className="mr-1 h-3 w-3" />
+            Tambah
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }
