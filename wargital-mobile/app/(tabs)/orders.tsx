@@ -106,4 +106,71 @@ export default function OrdersScreen() {
     )
   }
 
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+      <Stack.Screen options={{ title: 'Pesanan Saya', headerShadowVisible: false, headerStyle: { backgroundColor: theme.background } }} />
+
+      <View style={styles.header}>
+        <ThemedText type="subtitle">Pesanan Saya</ThemedText>
+      </View>
+
+      {loading && !refreshing && <ActivityIndicator size="large" color={theme.primary} style={{ marginTop: 20 }} />}
+
+      <FlatList
+        data={orders}
+        keyExtractor={(item) => item.id}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        contentContainerStyle={styles.list}
+        ListEmptyComponent={!loading ? <ThemedText style={{ textAlign: 'center', marginTop: 20 }}>Belum ada pesanan.</ThemedText> : null}
+        renderItem={({ item }) => {
+          const statusColor = mapStatusColor(item.status);
+          const progress = getProgress(item.status);
+          const itemsText = item.orderItems.map(i => `${i.quantity}x ${i.menuItem.name}`).join(', ');
+
+          return (
+            <View style={[styles.card, { backgroundColor: '#fff' }]}>
+              <View style={styles.cardHeader}>
+                <View>
+                  <ThemedText style={styles.restaurantName}>{item.restaurant?.name || 'Restoran'}</ThemedText>
+                  <ThemedText style={styles.orderId}>ID Pesanan: {item.id.slice(0, 8)}...</ThemedText>
+                </View>
+                <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+                  <ThemedText style={styles.statusText}>{item.status}</ThemedText>
+                </View>
+              </View>
+
+              <View style={styles.itemsSection}>
+                <ThemedText style={styles.itemLabel}>Item:</ThemedText>
+                <ThemedText style={styles.itemText} numberOfLines={2}>{itemsText}</ThemedText>
+              </View>
+
+              {/* Progress Bar Simulation */}
+              <View style={styles.progressContainer}>
+                <View style={[styles.progressBar, { width: `${progress * 100}%`, backgroundColor: theme.primary }]} />
+              </View>
+              <View style={styles.progressLabels}>
+                <ThemedText style={styles.progressLabel}>Dibuat</ThemedText>
+                <ThemedText style={styles.progressLabel}>Dapur</ThemedText>
+                <ThemedText style={styles.progressLabel}>Kirim</ThemedText>
+                <ThemedText style={styles.progressLabel}>Sampai</ThemedText>
+              </View>
+
+              <View style={styles.cardFooter}>
+                <View>
+                  <ThemedText style={styles.dateLabel}>{formatDate(item.orderDate)}</ThemedText>
+                </View>
+                <View>
+                  <ThemedText style={styles.totalLabel}>Total:</ThemedText>
+                  <ThemedText style={[styles.totalAmount, { color: theme.primary }]}>Rp {item.total.toLocaleString('id-ID')}</ThemedText>
+                </View>
+              </View>
+            </View>
+          );
+        }}
+      />
+
+    </SafeAreaView>
+  );
+}
+
 
