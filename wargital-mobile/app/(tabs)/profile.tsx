@@ -61,3 +61,67 @@ export default function ProfileScreen() {
     );
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 16,
+    },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 16,
+    },
+    message: {
+        color: '#666',
+        marginBottom: 8,
+    },
+    header: {
+        alignItems: 'center',
+        marginVertical: 32,
+    },
+    avatar: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        backgroundColor: '#FFFBE6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        marginBottom: 16,
+    },
+    avatarText: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#C0772C',
+    },
+    email: {
+        fontSize: 18,
+    },
+    section: {
+        backgroundColor: '#fff', // Or dynamic theme card bg
+        borderRadius: 12,
+        padding: 8,
+    },
+    menuItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    menuText: {
+        flex: 1,
+        marginLeft: 16,
+        fontSize: 16,
+    },
+    button: {
+        paddingHorizontal: 24,
+        paddingVertical: 12,
+        borderRadius: 8,
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+});
