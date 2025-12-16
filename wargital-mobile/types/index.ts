@@ -10,3 +10,16 @@ export interface Restaurant {
     updatedAt: string;
 }
 
+export interface MenuItem {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    image?: string;
+    imageHint?: string;
+    restaurantId: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
