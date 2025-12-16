@@ -22,4 +22,10 @@ export interface MenuItem {
     updatedAt: string;
 }
 
+export interface OrderItem {
+    id: string;
+    quantity: number;
+    menuItem: MenuItem;
+}
+
 
