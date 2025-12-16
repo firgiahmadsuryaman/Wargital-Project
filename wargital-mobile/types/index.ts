@@ -28,4 +28,11 @@ export interface OrderItem {
     menuItem: MenuItem;
 }
 
-
+export interface Order {
+    id: string;
+    status: string;
+    total: number;
+    orderDate: string;
+    restaurantId?: string;
+    items: OrderItem[];
+}
