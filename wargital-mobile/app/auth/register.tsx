@@ -90,4 +90,69 @@ export default function RegisterScreen() {
     );
 }
 
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        padding: 24,
+    },
+    formContainer: {
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        padding: 24,
+        shadowColor: '#000',
+        shadowOpacity: 0.05,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        elevation: 3,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+    subtitleRow: {
+        flexDirection: 'row',
+        marginBottom: 24,
+    },
+    subtitle: {
+        color: '#666',
+    },
+    link: {
+        color: '#C0772C',
+        fontWeight: 'bold',
+    },
+    inputGroup: {
+        marginBottom: 16,
+    },
+    label: {
+        marginBottom: 8,
+        fontWeight: '500',
+    },
+    input: {
+        height: 48,
+        borderRadius: 8,
+        paddingHorizontal: 16,
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: '#E5E5E5',
+    },
+    button: {
+        height: 48,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 8,
+    },
+    disabledButton: {
+        opacity: 0.7,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+});
