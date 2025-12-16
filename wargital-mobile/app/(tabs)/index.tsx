@@ -36,3 +36,17 @@ export default function HomeScreen() {
     }
   }; // Mengambil data restoran dari API
 
+  // Filter restoran berdasarkan query pencarian
+  const filteredRestaurants = useMemo(() => {
+    if (!searchQuery) return restaurants;
+    const lowerQuery = searchQuery.toLowerCase();
+    return restaurants.filter(r =>
+      r.name?.toLowerCase().includes(lowerQuery) ||
+      r.menu?.some(m =>
+        m.name?.toLowerCase().includes(lowerQuery) ||
+        (m.description && m.description.toLowerCase().includes(lowerQuery))
+      )
+    );
+  }, [restaurants, searchQuery]);
+
+
