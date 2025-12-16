@@ -52,4 +52,61 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ item }) => {
     );
 };
 
-
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 12,
+        shadowColor: '#000',
+        shadowOpacity: 0.05,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    image: {
+        width: 80,
+        height: 80,
+        borderRadius: 6,
+        marginRight: 12,
+    },
+    content: {
+        flex: 1,
+        justifyContent: 'space-between',
+    },
+    headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    description: {
+        fontSize: 12,
+        color: '#666',
+        marginVertical: 4,
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 8,
+    },
+    price: {
+        fontWeight: 'bold',
+        color: '#2a9d8f',
+    },
+    addButton: {
+        backgroundColor: '#C0772C', // Primary Color
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 16,
+    },
+    addButtonText: {
+        color: '#fff',
+        marginLeft: 4,
+        fontSize: 12,
+        fontWeight: '600',
+    },
+});
