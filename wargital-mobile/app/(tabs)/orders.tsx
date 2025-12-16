@@ -173,4 +173,111 @@ export default function OrdersScreen() {
   );
 }
 
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  list: {
+    padding: 16,
+  },
+  card: {
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 16,
+  },
+  restaurantName: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  orderId: {
+    fontSize: 12,
+    color: '#666',
+  },
+  statusBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  statusText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+  },
+  itemsSection: {
+    marginBottom: 16,
+  },
+  itemLabel: {
+    fontSize: 12,
+    color: '#666',
+  },
+  itemText: {
+    fontSize: 14,
+    marginTop: 2,
+  },
+  progressContainer: {
+    height: 6,
+    backgroundColor: '#E5E5E5',
+    borderRadius: 3,
+    marginBottom: 8,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+  },
+  progressLabels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  progressLabel: {
+    fontSize: 9,
+    color: '#888',
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    backgroundColor: '#f9f9f9',
+    marginHorizontal: -16,
+    marginBottom: -16,
+    padding: 16,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+  },
+  dateLabel: {
+    fontSize: 12,
+    color: '#666',
+    maxWidth: 150,
+  },
+  totalLabel: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'right',
+  },
+  totalAmount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
