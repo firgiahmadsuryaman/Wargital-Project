@@ -20,4 +20,8 @@ export default function HomeScreen() {
   const colorScheme = useColorScheme(); // Ambil mode tema (light/dark)
   const theme = Colors[colorScheme ?? 'light']; // Ambil warna sesuai tema
 
+  useEffect(() => {
+    loadRestaurants();
+  }, []); // Load data restoran saat screen pertama kali dibuka
+
 
