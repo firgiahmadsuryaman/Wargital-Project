@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { Restaurant } from '@/types';
-import { ThemedText } from '@/components/themed-text';
+import { ThemedText } from '@/components/ThemedText';
 
 interface RestaurantCardProps {
     restaurant: Restaurant;

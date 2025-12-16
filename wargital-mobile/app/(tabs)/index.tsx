@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { StyleSheet, FlatList, ActivityIndicator, View, TextInput } from 'react-native';
-import { ThemedText } from '@/components/themed-text';
+import { ThemedText } from '@/components/ThemedText';
 import { Restaurant } from '@/types';
 import { restaurantService } from '@/services/restaurantService';
 import { MenuItemCard } from '@/components/MenuItemCard';
@@ -89,12 +89,13 @@ export default function HomeScreen() {
             </ThemedText>
           ) : null
         }
+      />
 
-        {loading && (
-          <View style={[styles.loadingOverlay, { backgroundColor: theme.background }]}>
-            <ActivityIndicator size="large" color={theme.primary} />
-          </View>
-        )} {/* Overlay loading */}
+      {loading && (
+        <View style={[styles.loadingOverlay, { backgroundColor: theme.background }]}>
+          <ActivityIndicator size="large" color={theme.primary} />
+        </View>
+      )} {/* Overlay loading */}
     </SafeAreaView>
   );
 }

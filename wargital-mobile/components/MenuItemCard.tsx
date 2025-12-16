@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { MenuItem } from '@/types';
-import { ThemedText } from '@/components/themed-text';
+import { ThemedText } from '@/components/ThemedText';
 import { useCartStore } from '@/store/useCartStore';
 import { Ionicons } from '@expo/vector-icons';
 

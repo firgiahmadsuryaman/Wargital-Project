@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { ThemedText } from '@/components/themed-text';
+import { ThemedText } from '@/components/ThemedText';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { CartIcon } from '@/components/CartIcon';
@@ -120,6 +120,8 @@ export const HomeHeader = forwardRef<TextInput, HomeHeaderProps>(({ searchQuery,
         </View>
     );
 });
+
+HomeHeader.displayName = 'HomeHeader';
 
 const styles = StyleSheet.create({
     headerTop: {
