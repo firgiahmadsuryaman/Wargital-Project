@@ -21,4 +21,12 @@ api.interceptors.request.use(request => {
     return request;
 });
 
+api.interceptors.response.use(response => {
+    console.log('Response:', response.status);
+    return response;
+}, error => {
+    console.log('Response Error:', error);
+    return Promise.reject(error);
+});
 
+export default api;
