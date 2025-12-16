@@ -96,3 +96,75 @@ export default function RestaurantDetailScreen() {
     );
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    scrollContent: {
+        paddingBottom: 100,
+    },
+    headerImage: {
+        width: '100%',
+        height: 200,
+    },
+    info: {
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    description: {
+        marginTop: 8,
+        color: '#666',
+    },
+    menuList: {
+        padding: 16,
+    },
+    menuTitle: {
+        marginBottom: 16,
+    },
+    cartFooter: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#fff',
+        borderTopWidth: 1,
+        borderTopColor: '#eee',
+        padding: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: -2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+    cartInfo: {
+        color: '#666',
+        fontSize: 12,
+    },
+    cartTotal: {
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    viewCartButton: {
+        backgroundColor: '#0a7ea4',
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        borderRadius: 8,
+        flexDirection: 'row',
+        gap: 8,
+        alignItems: 'center',
+    },
+    viewCartText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+});
