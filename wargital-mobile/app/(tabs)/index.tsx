@@ -49,4 +49,20 @@ export default function HomeScreen() {
     );
   }, [restaurants, searchQuery]);
 
+  // Menggabungkan dan memfilter semua menu item dari semua restoran
+  const filteredMenuItems = useMemo(() => {
+    const all = restaurants.flatMap(r =>
+      (r.menu || []).map(m => ({ ...m, restaurantId: r.id }))
+    );
+    if (!searchQuery) return all;
+    return all.filter(m =>
+      m.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (m.description && m.description.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  }, [restaurants, searchQuery]);
+
+  const handleBannerSearchPress = () => {
+    searchInputRef.current?.focus();
+  }; // Fokus ke input search saat banner ditekan
+
 
