@@ -65,4 +65,38 @@ export default function HomeScreen() {
     searchInputRef.current?.focus();
   }; // Fokus ke input search saat banner ditekan
 
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+      <FlatList
+        data={filteredMenuItems}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <MenuItemCard item={item} />}
+        contentContainerStyle={styles.list}
+        keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={
+          <HomeHeader
+            ref={searchInputRef}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            restaurants={filteredRestaurants}
+            handleBannerSearchPress={handleBannerSearchPress}
+          />
+        }
+        ListEmptyComponent={
+          !loading ? (
+            <ThemedText style={{ textAlign: 'center', marginTop: 20 }}>
+              Tidak ada menu ditemukan.
+            </ThemedText>
+          ) : null
+        }
+
+        {loading && (
+          <View style={[styles.loadingOverlay, { backgroundColor: theme.background }]}>
+            <ActivityIndicator size="large" color={theme.primary} />
+          </View>
+        )} {/* Overlay loading */}
+    </SafeAreaView>
+  );
+}
+
 
