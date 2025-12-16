@@ -24,4 +24,15 @@ export default function HomeScreen() {
     loadRestaurants();
   }, []); // Load data restoran saat screen pertama kali dibuka
 
+  const loadRestaurants = async () => {
+    try {
+      setLoading(true);
+      const data = await restaurantService.getRestaurants();
+      setRestaurants(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }; // Mengambil data restoran dari API
 
