@@ -17,3 +17,8 @@ export default function EditProfileScreen() {
     const [name, setName] = useState('Warga Digital');
     const [phone, setPhone] = useState('081234567890');
     const [email, setEmail] = useState(user?.email || '');
+
+    const handleSave = () => {
+        Alert.alert('Sukses', 'Profil berhasil diperbarui!');
+        router.back();
+    };
