@@ -84,3 +84,42 @@ export default function EditProfileScreen() {
         </ThemedView >
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    content: {
+        padding: 20,
+    },
+    avatarContainer: {
+        alignItems: 'center',
+        marginBottom: 32,
+    },
+    avatar: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        backgroundColor: '#FFFBE6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        position: 'relative',
+    },
+    avatarText: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        color: '#C0772C',
+    },
+    editBadge: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: '#fff',
+    },
