@@ -97,3 +97,25 @@ export default function AddressFormScreen() {
                     placeholderTextColor="#999"
                 />
             </View>
+            <View style={styles.formGroup}>
+                <ThemedText style={styles.label}>Nama Penerima <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                <TextInput
+                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                    value={recipient}
+                    onChangeText={setRecipient}
+                    placeholder="Nama lengkap penerima"
+                    placeholderTextColor="#999"
+                />
+            </View>
+
+            <View style={styles.formGroup}>
+                <ThemedText style={styles.label}>Nomor Telepon <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                <TextInput
+                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                    value={phone}
+                    onChangeText={setPhone}
+                    keyboardType="phone-pad"
+                    placeholder="Contoh: 081234567890"
+                    placeholderTextColor="#999"
+                />
+            </View>
