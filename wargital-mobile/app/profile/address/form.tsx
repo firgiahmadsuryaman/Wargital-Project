@@ -8,3 +8,12 @@ import { useState, useEffect } from 'react';
 import { addressService } from '@/services/addressService';
 import { Address } from '@/types';
 import { Ionicons } from '@expo/vector-icons';
+
+export default function AddressFormScreen() {
+    const router = useRouter();
+    const params = useLocalSearchParams();
+    const colorScheme = useColorScheme();
+    const theme = Colors[colorScheme ?? 'light'];
+
+    // Check if we are in edit mode
+    const isEditMode = !!params.id;
