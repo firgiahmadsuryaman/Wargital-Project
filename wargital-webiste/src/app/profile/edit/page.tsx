@@ -11,3 +11,12 @@ import { toast } from 'sonner';
 import { apiClient } from '@/lib/api-client';
 import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+
+export default function EditProfilePage() {
+    const { user, isUserLoading, refreshUser } = useAuth();
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        phone: '',
+    });
