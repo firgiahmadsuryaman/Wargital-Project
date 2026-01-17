@@ -54,3 +54,18 @@ export default function FavoritesScreen() {
                     <ActivityIndicator size="large" color={theme.primary} />
                 </View>
             ) : (
+                <FlatList
+                    data={favorites}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <RestaurantCard
+                            restaurant={item}
+                            // Kita asumsikan semua di list ini adalah favorit
+                            initialIsFavorite={true}
+                            onToggleFavorite={handleToggleFavorite}
+                        />
+                    )}
+                    contentContainerStyle={styles.listContent}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                    }
