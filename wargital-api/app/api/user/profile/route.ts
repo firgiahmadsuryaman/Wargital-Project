@@ -52,3 +52,39 @@ export async function GET(request: Request) {
         return NextResponse.json({ message: 'Gagal mengambil profil' }, { status: 500 });
     }
 }
+
+// PUT: Update profil user
+export async function PUT(request: Request) {
+    const userId = getUserIdFromRequest(request);
+    if (!userId) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+        const body = await request.json();
+        const parsed = profileSchema.safeParse(body);
+
+        if (!parsed.success) {
+            return NextResponse.json(
+                { message: 'Data tidak valid', errors: parsed.error.errors },
+                { status: 400 }
+            );
+        }
+
+        const { name, phone } = parsed.data;
+
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: {
+                name,
+                phone: phone || null, // Handle empty string as null if needed, or keep as string
+            },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                phone: true,
+            },
+        });
+
+        return NextResponse.json(updatedUser);
