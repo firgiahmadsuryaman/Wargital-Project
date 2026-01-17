@@ -70,3 +70,30 @@ export default function AddressFormScreen() {
             />
 
             <ScrollView contentContainerStyle={styles.content}></ScrollView>
+            <View style={styles.formGroup}>
+                <ThemedText style={styles.label}>Label Alamat <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                <View style={styles.labelOptions}>
+                    {['Rumah', 'Kantor', 'Kost', 'Apartemen'].map((opt) => (
+                        <TouchableOpacity
+                            key={opt}
+                            style={[
+                                styles.chip,
+                                label === opt && { backgroundColor: theme.primary, borderColor: theme.primary }
+                            ]}
+                            onPress={() => setLabel(opt)}
+                        >
+                            <ThemedText style={[
+                                styles.chipText,
+                                label === opt && { color: '#fff' }
+                            ]}>{opt}</ThemedText>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+                <TextInput
+                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                    value={label}
+                    onChangeText={setLabel}
+                    placeholder="Contoh: Rumah Nenek"
+                    placeholderTextColor="#999"
+                />
+            </View>
