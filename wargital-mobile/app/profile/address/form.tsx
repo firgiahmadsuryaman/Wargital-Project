@@ -26,3 +26,36 @@ export default function AddressFormScreen() {
     const [isPrimary, setIsPrimary] = useState(params.isPrimary === 'true');
 
     const [loading, setLoading] = useState(false);
+
+    const handleSave = async () => {
+        if (!label || !recipient || !phone || !fullAddress) {
+            Alert.alert('Eror', 'Mohon lengkapi semua field wajib');
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const data = {
+                label,
+                recipient,
+                phone,
+                fullAddress,
+                detail,
+                isPrimary
+            };
+
+            if (isEditMode) {
+                await addressService.updateAddress(params.id as string, data);
+                Alert.alert('Sukses', 'Alamat berhasil diperbarui');
+            } else {
+                await addressService.createAddress(data);
+                Alert.alert('Sukses', 'Alamat berhasil ditambahkan');
+            }
+            router.back();
+        } catch (error) {
+            console.error(error);
+            Alert.alert('Gagal', 'Terjadi kesalahan saat menyimpan alamat');
+        } finally {
+            setLoading(false);
+        }
+    };
