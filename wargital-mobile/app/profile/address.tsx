@@ -90,3 +90,92 @@ export default function AddressScreen() {
         </ThemedView>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    listContent: {
+        padding: 20,
+        gap: 16,
+    },
+    addressCard: {
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        padding: 16,
+        borderWidth: 1,
+        borderColor: '#eee',
+        shadowColor: '#000',
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    labelContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    addressLabel: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: '#666',
+        textTransform: 'uppercase',
+    },
+    primaryBadge: {
+        paddingHorizontal: 6,
+        paddingVertical: 2,
+        borderRadius: 4,
+    },
+    primaryText: {
+        fontSize: 10,
+        fontWeight: 'bold',
+    },
+    editText: {
+        fontWeight: '600',
+        fontSize: 14,
+    },
+    recipient: {
+        fontSize: 16,
+        marginBottom: 2,
+    },
+    phone: {
+        color: '#666',
+        marginBottom: 8,
+    },
+    address: {
+        lineHeight: 20,
+    },
+    setPrimaryButton: {
+        marginTop: 12,
+        alignSelf: 'flex-start',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 16,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+    },
+    setPrimaryText: {
+        fontSize: 12,
+        color: '#666',
+    },
+    addButton: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 16,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        backgroundColor: '#f9f9f9',
+    },
+    addButtonText: {
+        fontWeight: '600',
+        marginLeft: 8,
+    },
+});
