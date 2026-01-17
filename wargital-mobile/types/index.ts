@@ -49,3 +49,13 @@ export interface Address {
     isPrimary: boolean;
     userId: string;
 }
+
+export interface PaymentMethod {
+    id: string;
+    type: 'E_WALLET' | 'BANK_TRANSFER' | 'CARD';
+    provider: string;
+    accountNumber: string;
+    accountName: string;
+    isPrimary: boolean;
+    userId: string;
+}
