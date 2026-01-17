@@ -14,3 +14,6 @@ export default function FavoritesScreen() {
     const colorScheme = useColorScheme();
     const theme = Colors[colorScheme ?? 'light'];
     const router = useRouter();
+    const [favorites, setFavorites] = useState<Restaurant[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
