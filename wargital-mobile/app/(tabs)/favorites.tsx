@@ -35,3 +35,14 @@ export default function FavoritesScreen() {
             loadFavorites();
         }, [])
     );
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        loadFavorites();
+    };
+
+    // Callback saat tombol love ditekan di card
+    const handleToggleFavorite = async () => {
+        // Reload list untuk memastikan data sinkron (item hilang jika di-unlike)
+        loadFavorites();
+    };
