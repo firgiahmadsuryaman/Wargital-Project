@@ -69,3 +69,17 @@ export default function FavoritesScreen() {
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
                     }
+                    ListEmptyComponent={
+                        <View style={styles.emptyContainer}>
+                            <Ionicons name="heart-dislike-outline" size={64} color="#ccc" />
+                            <ThemedText style={styles.emptyTitle}>Belum ada Favorit</ThemedText>
+                            <ThemedText style={styles.emptyText}>
+                                Tandai restoran favoritmu agar mudah ditemukan nanti.
+                            </ThemedText>
+                        </View>
+                    }
+                />
+            )}
+        </ThemedView>
+    );
+}
