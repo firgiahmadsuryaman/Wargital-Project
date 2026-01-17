@@ -39,6 +39,7 @@ model MenuItem {
   orderItems   OrderItem[]
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
+  favorites    Favorite[]
 }
 
 model Order {
@@ -94,12 +95,22 @@ model Address {
 }
 
 model Favorite {
-  id           String     @id @default(cuid())
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String      @id @default(cuid())
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  restaurantId String
-  createdAt    DateTime   @default(now())
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId String?
+  menuItem     MenuItem?   @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  menuItemId   String?
+  createdAt    DateTime    @default(now())
 
-  @@unique([userId, restaurantId])
+  // Constraint: Unik per user per restoran ATAU per user per menu item
+  // Karena prisma unique constraint agak limitatif untuk optional fields di beberapa DB, 
+  // kita buat unique compound yang mungkin terpisah atau validasi di aplikasi.
+  // Tapi untuk simpelnya kita bisa lepas @@unique global ini dan handle di logic, 
+  // ATAU buat @unique kondisional (Postgres support partial index, tapi Prisma belum full support clean syntax).
+  // Jalan tengah: Tetap simpan @@unique secara terpisah jika mungkin, atau hapus dan handle di API.
+  // Mari coba hapus unique constraint strict di sini dan handle di API findUnique.
+  // ATAU biarkan database menerima duplikat teknis tapi aplikasi mencegahnya.
+  // Sebaiknya kita gunakan pendekatan API check existing.
 }

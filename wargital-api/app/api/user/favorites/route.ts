@@ -4,7 +4,8 @@ import { z } from 'zod';
 import jwt from 'jsonwebtoken';
 
 const favoriteSchema = z.object({
-    restaurantId: z.string().min(1, "Restaurant ID wajib diisi"),
+    restaurantId: z.string().optional(),
+    menuItemId: z.string().optional(),
 });
 
 const getJwtSecret = () => process.env.JWT_SECRET || 'dev-secret';
@@ -33,11 +34,18 @@ export async function GET(request: Request) {
         where: { userId },
         include: {
             restaurant: true, // Include data restoran
+            menuItem: true,   // Include data menu item
         },
         orderBy: { createdAt: 'desc' },
     });
 
-
+    // Map result: kembalikan list restoran DAN list menu
+    // Tapi untuk simpelnya, kita bisa return struktur raw favorit, 
+    // karena di frontend halaman favorit mungkin dipisah tabnya (Restoran | Menu).
+    // Atau frontend yang filter.
+    // Untuk kompatibilitas yang ada (getFavorites di service return Restaurant[]),
+    // Mari kita modifikasi service di frontend saja nanti untuk handle format baru.
+    // Return as is for flexibility.
     return NextResponse.json(favorites);
 }
 
@@ -59,16 +67,31 @@ export async function POST(request: Request) {
         );
     }
 
-    const { restaurantId } = parsed.data;
+    if (!parsed.data.restaurantId && !parsed.data.menuItemId) {
+        return NextResponse.json(
+            { message: 'Wajib menyertakan id restoran atau menu item' },
+            { status: 400 }
+        );
+    }
+
+    const { restaurantId, menuItemId } = parsed.data;
+    let whereClause = {};
+
+    if (menuItemId) {
+        whereClause = {
+            userId,
+            menuItemId
+        }
+    } else {
+        whereClause = {
+            userId,
+            restaurantId
+        }
+    }
 
     // Cek apakah sudah ada
-    const existing = await prisma.favorite.findUnique({
-        where: {
-            userId_restaurantId: {
-                userId,
-                restaurantId,
-            },
-        },
+    const existing = await prisma.favorite.findFirst({
+        where: whereClause,
     });
 
     if (existing) {
@@ -79,8 +102,61 @@ export async function POST(request: Request) {
         data: {
             userId,
             restaurantId,
+            menuItemId,
         },
     });
 
     return NextResponse.json(favorite, { status: 201 });
+}
+
+// DELETE: Hapus favorit (Restaurant atau Menu Item) via Query Params
+// Contoh: DELETE /api/user/favorites?restaurantId=123
+// Contoh: DELETE /api/user/favorites?menuItemId=456
+export async function DELETE(request: Request) {
+    const userId = getUserIdFromRequest(request);
+    if (!userId) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const restaurantId = searchParams.get('restaurantId');
+    const menuItemId = searchParams.get('menuItemId');
+
+    if (!restaurantId && !menuItemId) {
+        return NextResponse.json({ message: 'Parameter restaurantId atau menuItemId diperlukan' }, { status: 400 });
+    }
+
+    let whereClause = {};
+
+    if (menuItemId) {
+        whereClause = {
+            userId,
+            menuItemId
+        }
+    } else {
+        whereClause = {
+            userId,
+            resturantId: restaurantId // Note: Prisma generated field for restaurantId might be distinct if not using @@unique.
+            // Wait, without @@unique, we can't use delete({where: ...}) easily unless we know the ID.
+            // We must use deleteMany because userId+restaurantId is not guaranteed unique in Prisma schema (though logic enforces it).
+            // deleteMany is safer here.
+        }
+        // Correction: My previous schema update removed @@unique. So I cannot use delete with composite key unique.
+        // I must use deleteMany.
+    }
+
+    // Re-construct where clause properly
+    const where: any = { userId };
+    if (menuItemId) where.menuItemId = menuItemId;
+    if (restaurantId) where.restaurantId = restaurantId;
+
+    try {
+        await prisma.favorite.deleteMany({
+            where,
+        });
+        return NextResponse.json({ message: 'Berhasil dihapus dari favorit' });
+    } catch (error) {
+        console.error('DELETE Error', error);
+        return NextResponse.json({ message: 'Gagal menghapus' }, { status: 500 });
+    }
 }

@@ -6,6 +6,7 @@ export interface Restaurant {
     image?: string;
     imageHint?: string;
     menu?: MenuItem[];
+    isFavorite?: boolean;
     createdAt: string;
     updatedAt: string;
 }
@@ -18,6 +19,7 @@ export interface MenuItem {
     image?: string;
     imageHint?: string;
     restaurantId: string;
+    isFavorite?: boolean;
     createdAt: string;
     updatedAt: string;
 }

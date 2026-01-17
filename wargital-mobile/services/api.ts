@@ -16,7 +16,17 @@ const api = axios.create({
     timeout: 10000,
 });
 
-api.interceptors.request.use(request => {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+api.interceptors.request.use(async (request) => {
+    try {
+        const token = await AsyncStorage.getItem('userToken');
+        if (token) {
+            request.headers.Authorization = `Bearer ${token}`;
+        }
+    } catch (e) {
+        console.error('Error fetching token', e);
+    }
     return request;
 });
 

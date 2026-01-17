@@ -5,8 +5,8 @@ import { MenuItem } from '@/types';
 import { ThemedText } from '@/components/ThemedText';
 import { useCartStore } from '@/store/useCartStore';
 import { Ionicons } from '@expo/vector-icons';
-
-import { useFavoritesStore } from '@/store/useFavoritesStore';
+import { useState } from 'react';
+import { favoriteService } from '@/services/favoriteService';
 
 interface MenuItemCardProps {
     item: MenuItem;
@@ -14,14 +14,26 @@ interface MenuItemCardProps {
 
 export const MenuItemCard: React.FC<MenuItemCardProps> = ({ item }) => {
     const addItem = useCartStore((state) => state.addItem);
-    const { isFavorite, addFavorite, removeFavorite } = useFavoritesStore();
-    const favorite = isFavorite(item.id);
+    const [isFavorite, setIsFavorite] = useState(item.isFavorite || false);
+    const [loading, setLoading] = useState(false);
 
-    const toggleFavorite = () => {
-        if (favorite) {
-            removeFavorite(item.id);
-        } else {
-            addFavorite(item);
+    const toggleFavorite = async () => {
+        try {
+            setLoading(true);
+            const newState = !isFavorite;
+
+            if (newState) {
+                await favoriteService.addFavoriteMenu(item.id);
+            } else {
+                await favoriteService.removeFavoriteMenu(item.id);
+            }
+
+            setIsFavorite(newState);
+        } catch (error) {
+            console.error(error);
+            // Revert state if error? Or just alert.
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -35,8 +47,8 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ item }) => {
             <View style={styles.content}>
                 <View style={styles.headerRow}>
                     <ThemedText type="defaultSemiBold" style={{ flex: 1 }}>{item.name}</ThemedText>
-                    <TouchableOpacity onPress={toggleFavorite}>
-                        <Ionicons name={favorite ? "heart" : "heart-outline"} size={20} color={favorite ? "red" : "#999"} />
+                    <TouchableOpacity onPress={toggleFavorite} disabled={loading}>
+                        <Ionicons name={isFavorite ? "heart" : "heart-outline"} size={20} color={isFavorite ? "red" : "#999"} />
                     </TouchableOpacity>
                 </View>
                 <ThemedText style={styles.description} numberOfLines={2}>{item.description}</ThemedText>

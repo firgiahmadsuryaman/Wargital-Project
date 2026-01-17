@@ -87,7 +87,10 @@ export const HomeHeader = forwardRef<TextInput, HomeHeaderProps>(({ searchQuery,
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => (
                             <View style={{ width: 280, marginRight: 16 }}>
-                                <RestaurantCard restaurant={item} />
+                                <RestaurantCard
+                                    restaurant={item}
+                                    initialIsFavorite={item.isFavorite}
+                                />
                             </View>
                         )}
                         showsHorizontalScrollIndicator={false}
