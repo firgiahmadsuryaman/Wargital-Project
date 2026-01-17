@@ -143,3 +143,30 @@ export default function AddressFormScreen() {
                     placeholderTextColor="#999"
                 />
             </View>
+            <TouchableOpacity
+                style={styles.switchContainer}
+                onPress={() => setIsPrimary(!isPrimary)}
+            >
+                <Ionicons
+                    name={isPrimary ? "checkbox" : "square-outline"}
+                    size={24}
+                    color={isPrimary ? theme.primary : "#999"}
+                />
+                <ThemedText style={styles.switchText}>Jadikan Alamat Utama</ThemedText>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={[styles.saveButton, { backgroundColor: theme.primary }]}
+                onPress={handleSave}
+                disabled={loading}
+            >
+                {loading ? (
+                    <ActivityIndicator color="#fff" />
+                ) : (
+                    <ThemedText style={styles.saveButtonText}>Simpan Alamat</ThemedText>
+                )}
+            </TouchableOpacity>
+        </ScrollView>
+        </ThemedView >
+    );
+}
