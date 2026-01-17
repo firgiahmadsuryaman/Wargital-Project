@@ -9,7 +9,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EditProfileScreen() {
-    return null;
-}
-
-const styles = StyleSheet.create({});
+    const { user } = useAuth();
+    const router = useRouter();
+    const colorScheme = useColorScheme();
+    const theme = Colors[colorScheme ?? 'light'];
