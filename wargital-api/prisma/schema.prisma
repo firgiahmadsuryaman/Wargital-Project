@@ -22,6 +22,7 @@ model Restaurant {
   imageHint   String?
   menuItems   MenuItem[]
   orders      Order[]
+  favorites   Favorite[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
@@ -66,15 +67,16 @@ model OrderItem {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
+  id           String     @id @default(cuid())
+  email        String     @unique
   passwordHash String
   name         String? // Added for profile
   phone        String? // Added for profile
   orders       Order[]
   addresses    Address[] // Relation to Address
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  favorites    Favorite[]
 }
 
 model Address {
@@ -83,9 +85,21 @@ model Address {
   recipient   String
   phone       String
   fullAddress String
+  detail      String?
   isPrimary   Boolean  @default(false)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Favorite {
+  id           String     @id @default(cuid())
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId String
+  createdAt    DateTime   @default(now())
+
+  @@unique([userId, restaurantId])
 }
