@@ -39,3 +39,24 @@ export default function EditProfileScreen() {
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <View style={styles.form}>
+                <View style={styles.inputGroup}>
+                    <ThemedText style={styles.label}>Nama Lengkap</ThemedText>
+                    <TextInput
+                        style={[styles.input, { borderColor: '#e5e5e5', color: theme.text }]}
+                        value={name}
+                        onChangeText={setName}
+                        placeholder="Masukkan nama lengkap"
+                        placeholderTextColor="#999"
+                    />
+                </View>
+
+                <View style={styles.inputGroup}>
+                    <ThemedText style={styles.label}>Email</ThemedText>
+                    <TextInput
+                        style={[styles.input, { borderColor: '#e5e5e5', color: '#999', backgroundColor: '#f5f5f5' }]}
+                        value={email}
+                        editable={false}
+                    />
+                </View>
