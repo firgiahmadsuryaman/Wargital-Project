@@ -15,3 +15,22 @@ interface Address {
     fullAddress: string;
     isPrimary: boolean;
 }
+
+const DUMMY_ADDRESSES: Address[] = [
+    {
+        id: '1',
+        label: 'Rumah',
+        recipient: 'Warga Digital',
+        phone: '081234567890',
+        fullAddress: 'Jl. ZA. Pagar Alam No.93, Gedong Meneng, Kec. Rajabasa, Kota Bandar Lampung, Lampung 35142',
+        isPrimary: true,
+    },
+    {
+        id: '2',
+        label: 'Kantor',
+        recipient: 'Warga Digital',
+        phone: '081234567890',
+        fullAddress: 'Universitas Teknokrat Indonesia, Gedung A',
+        isPrimary: false,
+    },
+];
