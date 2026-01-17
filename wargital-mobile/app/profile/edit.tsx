@@ -22,3 +22,9 @@ export default function EditProfileScreen() {
         Alert.alert('Sukses', 'Profil berhasil diperbarui!');
         router.back();
     };
+
+    return (
+        <ThemedView style={styles.container}>
+            <Stack.Screen options={{ title: 'Edit Profil', headerBackTitle: 'Kembali' }} />
+
+            <ScrollView contentContainerStyle={styles.content}></ScrollView>
