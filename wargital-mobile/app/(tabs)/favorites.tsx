@@ -83,3 +83,36 @@ export default function FavoritesScreen() {
         </ThemedView>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    listContent: {
+        padding: 16,
+        gap: 16,
+    },
+    emptyContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 100,
+        padding: 32,
+    },
+    emptyTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 16,
+        marginBottom: 8,
+    },
+    emptyText: {
+        textAlign: 'center',
+        color: '#666',
+        lineHeight: 20,
+    },
+});
