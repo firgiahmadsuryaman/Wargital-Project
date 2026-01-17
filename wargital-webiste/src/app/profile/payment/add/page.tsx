@@ -10,3 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ArrowLeft, CreditCard, Save, Loader2, Wallet, Building2 } from 'lucide-react';
 import Link from 'next/link';
 import { Switch } from '@/components/ui/switch';
+
+export default function AddPaymentPage() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [type, setType] = useState('BANK_TRANSFER');
