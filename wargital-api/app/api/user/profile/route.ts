@@ -88,3 +88,9 @@ export async function PUT(request: Request) {
         });
 
         return NextResponse.json(updatedUser);
+
+    } catch (error) {
+        console.error('PUT Profile Error', error);
+        return NextResponse.json({ message: 'Gagal mengupdate profil' }, { status: 500 });
+    }
+}
