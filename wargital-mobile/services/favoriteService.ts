@@ -1,5 +1,5 @@
 import api from './api';
-import { Restaurant } from '@/types';
+import { Restaurant, MenuItem } from '@/types';
 
 // Tipe data response dari API favorites
 // API mengembalikan array of Favorite object yang didalamnya ada restaurant
@@ -7,6 +7,8 @@ interface FavoriteResponse {
     id: string;
     restaurant: Restaurant;
     restaurantId: string;
+    menuItem: MenuItem;
+    menuItemId: string;
     userId: string;
     createdAt: string;
 }
@@ -19,6 +21,15 @@ export const favoriteService = {
         return response.data
             .map(item => item.restaurant)
             .filter((r): r is Restaurant => r !== null && r !== undefined);
+    },
+
+    // Mengambil daftar menu favorit
+    getFavoriteMenuItems: async (): Promise<MenuItem[]> => {
+        const response = await api.get<FavoriteResponse[]>('/user/favorites');
+        // Map dari FavoriteResponse ke MenuItem
+        return response.data
+            .map(item => item.menuItem)
+            .filter((m): m is MenuItem => m !== null && m !== undefined);
     },
 
     // Menambah ke favorit
