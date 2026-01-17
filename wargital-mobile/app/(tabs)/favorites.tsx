@@ -17,3 +17,15 @@ export default function FavoritesScreen() {
     const [favorites, setFavorites] = useState<Restaurant[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+
+    const loadFavorites = async () => {
+        try {
+            const data = await favoriteService.getFavorites();
+            setFavorites(data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    };
