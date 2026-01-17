@@ -95,7 +95,7 @@ export default function HomeScreen() {
         <View style={[styles.loadingOverlay, { backgroundColor: theme.background }]}>
           <ActivityIndicator size="large" color={theme.primary} />
         </View>
-      )} {/* Overlay loading */}
+      )}
     </SafeAreaView>
   );
 }
