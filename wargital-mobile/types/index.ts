@@ -36,3 +36,14 @@ export interface Order {
     restaurantId?: string;
     items: OrderItem[];
 }
+
+export interface Address {
+    id: string;
+    label: string;
+    recipient: string;
+    phone: string;
+    fullAddress: string;
+    detail?: string;
+    isPrimary: boolean;
+    userId: string;
+}

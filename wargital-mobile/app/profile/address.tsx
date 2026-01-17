@@ -1,45 +1,88 @@
-import { StyleSheet, View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, FlatList, Alert, ActivityIndicator, RefreshControl } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
-
-interface Address {
-    id: string;
-    label: string;
-    recipient: string;
-    phone: string;
-    fullAddress: string;
-    isPrimary: boolean;
-}
-
-const DUMMY_ADDRESSES: Address[] = [
-    {
-        id: '1',
-        label: 'Rumah',
-        recipient: 'Warga Digital',
-        phone: '081234567890',
-        fullAddress: 'Jl. ZA. Pagar Alam No.93, Gedong Meneng, Kec. Rajabasa, Kota Bandar Lampung, Lampung 35142',
-        isPrimary: true,
-    },
-    {
-        id: '2',
-        label: 'Kantor',
-        recipient: 'Warga Digital',
-        phone: '081234567890',
-        fullAddress: 'Universitas Teknokrat Indonesia, Gedung A',
-        isPrimary: false,
-    },
-];
+import { useState, useCallback } from 'react';
+import { Address } from '@/types';
+import { addressService } from '@/services/addressService';
 
 export default function AddressScreen() {
     const router = useRouter();
     const colorScheme = useColorScheme();
     const theme = Colors[colorScheme ?? 'light'];
-    const [addresses, setAddresses] = useState<Address[]>(DUMMY_ADDRESSES);
+    const [addresses, setAddresses] = useState<Address[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const loadAddresses = async () => {
+        try {
+            const data = await addressService.getAddresses();
+            setAddresses(data);
+        } catch (error) {
+            console.error(error);
+            Alert.alert('Eror', 'Gagal memuat alamat');
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            loadAddresses();
+        }, [])
+    );
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        loadAddresses();
+    };
+
+    const handleDelete = (id: string) => {
+        Alert.alert('Hapus Alamat', 'Yakin ingin menghapus alamat ini?', [
+            { text: 'Batal', style: 'cancel' },
+            {
+                text: 'Hapus',
+                style: 'destructive',
+                onPress: async () => {
+                    try {
+                        await addressService.deleteAddress(id);
+                        loadAddresses();
+                    } catch (error) {
+                        Alert.alert('Gagal', 'Tidak dapat menghapus alamat');
+                    }
+                }
+            }
+        ]);
+    };
+
+    const handleEdit = (item: Address) => {
+        // Pass data via params. Note that booleans/numbers become strings.
+        router.push({
+            pathname: '/profile/address/form',
+            params: {
+                id: item.id,
+                label: item.label,
+                recipient: item.recipient,
+                phone: item.phone,
+                fullAddress: item.fullAddress,
+                detail: item.detail || '',
+                isPrimary: item.isPrimary.toString()
+            }
+        });
+    };
+
+    const handleSetPrimary = async (item: Address) => {
+        try {
+            await addressService.updateAddress(item.id, { isPrimary: true });
+            loadAddresses();
+        } catch (error) {
+            Alert.alert('Gagal', 'Gagal mengubah alamat utama');
+        }
+    };
 
     const renderItem = ({ item }: { item: Address }) => (
         <View style={styles.addressCard}>
@@ -52,17 +95,24 @@ export default function AddressScreen() {
                         </View>
                     )}
                 </View>
-                <TouchableOpacity>
-                    <ThemedText style={[styles.editText, { color: theme.primary }]}>Ubah</ThemedText>
-                </TouchableOpacity>
+                <View style={styles.actions}>
+                    <TouchableOpacity onPress={() => handleEdit(item)} style={styles.actionBtn}>
+                        <ThemedText style={[styles.editText, { color: theme.primary }]}>Ubah</ThemedText>
+                    </TouchableOpacity>
+                    {!item.isPrimary && (
+                        <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.actionBtn}>
+                            <Ionicons name="trash-outline" size={18} color="red" />
+                        </TouchableOpacity>
+                    )}
+                </View>
             </View>
 
             <ThemedText type="defaultSemiBold" style={styles.recipient}>{item.recipient}</ThemedText>
             <ThemedText style={styles.phone}>{item.phone}</ThemedText>
-            <ThemedText style={styles.address}>{item.fullAddress}</ThemedText>
+            <ThemedText style={styles.address}>{item.fullAddress} {item.detail ? `(${item.detail})` : ''}</ThemedText>
 
             {!item.isPrimary && (
-                <TouchableOpacity style={styles.setPrimaryButton}>
+                <TouchableOpacity style={styles.setPrimaryButton} onPress={() => handleSetPrimary(item)}>
                     <ThemedText style={styles.setPrimaryText}>Jadikan Alamat Utama</ThemedText>
                 </TouchableOpacity>
             )}
@@ -73,20 +123,38 @@ export default function AddressScreen() {
         <ThemedView style={styles.container}>
             <Stack.Screen options={{ title: 'Alamat Tersimpan', headerBackTitle: 'Kembali' }} />
 
-            <FlatList
-                data={addresses}
-                keyExtractor={(item) => item.id}
-                renderItem={renderItem}
-                contentContainerStyle={styles.listContent}
-                ListFooterComponent={
-                    <TouchableOpacity style={[styles.addButton, { borderColor: theme.primary }]}>
-                        <Ionicons name="add" size={20} color={theme.primary} />
-                        <ThemedText style={[styles.addButtonText, { color: theme.primary }]}>
-                            Tambah Alamat Baru
-                        </ThemedText>
-                    </TouchableOpacity>
-                }
-            />
+            {loading ? (
+                <View style={styles.center}>
+                    <ActivityIndicator size="large" color={theme.primary} />
+                </View>
+            ) : (
+                <FlatList
+                    data={addresses}
+                    keyExtractor={(item) => item.id}
+                    renderItem={renderItem}
+                    contentContainerStyle={styles.listContent}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                    }
+                    ListEmptyComponent={
+                        <View style={styles.emptyContainer}>
+                            <Ionicons name="map-outline" size={48} color="#ccc" />
+                            <ThemedText style={styles.emptyText}>Belum ada alamat tersimpan</ThemedText>
+                        </View>
+                    }
+                    ListFooterComponent={
+                        <TouchableOpacity
+                            style={[styles.addButton, { borderColor: theme.primary }]}
+                            onPress={() => router.push('/profile/address/form')}
+                        >
+                            <Ionicons name="add" size={20} color={theme.primary} />
+                            <ThemedText style={[styles.addButtonText, { color: theme.primary }]}>
+                                Tambah Alamat Baru
+                            </ThemedText>
+                        </TouchableOpacity>
+                    }
+                />
+            )}
         </ThemedView>
     );
 }
@@ -95,9 +163,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     listContent: {
         padding: 20,
         gap: 16,
+        paddingBottom: 40,
     },
     addressCard: {
         backgroundColor: '#fff',
@@ -136,6 +210,14 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: 'bold',
     },
+    actions: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+    },
+    actionBtn: {
+        padding: 4,
+    },
     editText: {
         fontWeight: '600',
         fontSize: 14,
@@ -173,9 +255,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'dashed',
         backgroundColor: '#f9f9f9',
+        marginTop: 16,
     },
     addButtonText: {
         fontWeight: '600',
         marginLeft: 8,
+    },
+    emptyContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 40,
+    },
+    emptyText: {
+        marginTop: 12,
+        color: '#999',
     },
 });
