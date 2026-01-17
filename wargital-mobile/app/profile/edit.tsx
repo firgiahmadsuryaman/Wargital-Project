@@ -60,3 +60,27 @@ export default function EditProfileScreen() {
                         editable={false}
                     />
                 </View>
+
+                <View style={styles.inputGroup}>
+                    <ThemedText style={styles.label}>Nomor Telepon</ThemedText>
+                    <TextInput
+                        style={[styles.input, { borderColor: '#e5e5e5', color: theme.text }]}
+                        value={phone}
+                        onChangeText={setPhone}
+                        keyboardType="phone-pad"
+                        placeholder="Masukkan nomor telepon"
+                        placeholderTextColor="#999"
+                    />
+                </View>
+            </View>
+
+            <TouchableOpacity
+                style={[styles.saveButton, { backgroundColor: theme.primary }]}
+                onPress={handleSave}
+            >
+                <ThemedText style={styles.saveButtonText}>Simpan Perubahan</ThemedText>
+            </TouchableOpacity>
+        </ScrollView>
+        </ThemedView >
+    );
+}
