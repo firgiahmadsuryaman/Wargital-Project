@@ -28,3 +28,9 @@ export default function PaymentMethodsPage() {
             isPrimary: false,
         },
     ];
+
+    const handleDelete = (id: string) => {
+        if (confirm('Apakah Anda yakin ingin menghapus metode pembayaran ini?')) {
+            alert('Metode pembayaran berhasil dihapus (Simulasi)');
+        }
+    };
