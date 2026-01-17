@@ -34,3 +34,9 @@ const DUMMY_ADDRESSES: Address[] = [
         isPrimary: false,
     },
 ];
+
+export default function AddressScreen() {
+    const router = useRouter();
+    const colorScheme = useColorScheme();
+    const theme = Colors[colorScheme ?? 'light'];
+    const [addresses, setAddresses] = useState<Address[]>(DUMMY_ADDRESSES);
