@@ -69,104 +69,121 @@ export default function AddressFormScreen() {
                 }}
             />
 
-            <ScrollView contentContainerStyle={styles.content}></ScrollView>
-            <View style={styles.formGroup}>
-                <ThemedText style={styles.label}>Label Alamat <ThemedText style={styles.required}>*</ThemedText></ThemedText>
-                <View style={styles.labelOptions}>
-                    {['Rumah', 'Kantor', 'Kost', 'Apartemen'].map((opt) => (
-                        <TouchableOpacity
-                            key={opt}
-                            style={[
-                                styles.chip,
-                                label === opt && { backgroundColor: theme.primary, borderColor: theme.primary }
-                            ]}
-                            onPress={() => setLabel(opt)}
-                        >
-                            <ThemedText style={[
-                                styles.chipText,
-                                label === opt && { color: '#fff' }
-                            ]}>{opt}</ThemedText>
-                        </TouchableOpacity>
-                    ))}
+            <ScrollView contentContainerStyle={styles.content}>
+                <View style={styles.formGroup}>
+                    <ThemedText style={styles.label}>Label Alamat <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                    <View style={styles.labelOptions}>
+                        {['Rumah', 'Kantor', 'Kost', 'Apartemen'].map((opt) => (
+                            <TouchableOpacity
+                                key={opt}
+                                style={[
+                                    styles.chip,
+                                    label === opt && { backgroundColor: theme.primary, borderColor: theme.primary }
+                                ]}
+                                onPress={() => setLabel(opt)}
+                            >
+                                <ThemedText style={[
+                                    styles.chipText,
+                                    label === opt && { color: '#fff' }
+                                ]}>{opt}</ThemedText>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                    <TextInput
+                        style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                        value={label}
+                        onChangeText={setLabel}
+                        placeholder="Contoh: Rumah Nenek"
+                        placeholderTextColor="#999"
+                    />
                 </View>
-                <TextInput
-                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
-                    value={label}
-                    onChangeText={setLabel}
-                    placeholder="Contoh: Rumah Nenek"
-                    placeholderTextColor="#999"
-                />
-            </View>
-            <View style={styles.formGroup}>
-                <ThemedText style={styles.label}>Nama Penerima <ThemedText style={styles.required}>*</ThemedText></ThemedText>
-                <TextInput
-                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
-                    value={recipient}
-                    onChangeText={setRecipient}
-                    placeholder="Nama lengkap penerima"
-                    placeholderTextColor="#999"
-                />
-            </View>
+                <View style={styles.formGroup}>
+                    <ThemedText style={styles.label}>Nama Penerima <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                    <TextInput
+                        style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                        value={recipient}
+                        onChangeText={setRecipient}
+                        placeholder="Nama lengkap penerima"
+                        placeholderTextColor="#999"
+                    />
+                </View>
 
-            <View style={styles.formGroup}>
-                <ThemedText style={styles.label}>Nomor Telepon <ThemedText style={styles.required}>*</ThemedText></ThemedText>
-                <TextInput
-                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
-                    value={phone}
-                    onChangeText={setPhone}
-                    keyboardType="phone-pad"
-                    placeholder="Contoh: 081234567890"
-                    placeholderTextColor="#999"
-                />
-            </View>
-            <View style={styles.formGroup}>
-                <ThemedText style={styles.label}>Alamat Lengkap <ThemedText style={styles.required}>*</ThemedText></ThemedText>
-                <TextInput
-                    style={[styles.input, styles.textArea, { color: theme.text, borderColor: '#e5e5e5' }]}
-                    value={fullAddress}
-                    onChangeText={setFullAddress}
-                    multiline
-                    numberOfLines={3}
-                    placeholder="Nama jalan, nomor rumah, kecamatan, kota..."
-                    placeholderTextColor="#999"
-                    textAlignVertical="top"
-                />
-            </View>
+                <View style={styles.formGroup}>
+                    <ThemedText style={styles.label}>Nomor Telepon <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                    <TextInput
+                        style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                        value={phone}
+                        onChangeText={setPhone}
+                        keyboardType="phone-pad"
+                        placeholder="Contoh: 081234567890"
+                        placeholderTextColor="#999"
+                    />
+                </View>
+                <View style={styles.formGroup}>
+                    <ThemedText style={styles.label}>Alamat Lengkap <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                    <TextInput
+                        style={[styles.input, styles.textArea, { color: theme.text, borderColor: '#e5e5e5' }]}
+                        value={fullAddress}
+                        onChangeText={setFullAddress}
+                        multiline
+                        numberOfLines={3}
+                        placeholder="Nama jalan, nomor rumah, kecamatan, kota..."
+                        placeholderTextColor="#999"
+                        textAlignVertical="top"
+                    />
+                </View>
 
-            <View style={styles.formGroup}>
-                <ThemedText style={styles.label}>Detail Lokasi (Opsional)</ThemedText>
-                <TextInput
-                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
-                    value={detail}
-                    onChangeText={setDetail}
-                    placeholder="Patokan, warna rumah, dll"
-                    placeholderTextColor="#999"
-                />
-            </View>
-            <TouchableOpacity
-                style={styles.switchContainer}
-                onPress={() => setIsPrimary(!isPrimary)}
-            >
-                <Ionicons
-                    name={isPrimary ? "checkbox" : "square-outline"}
-                    size={24}
-                    color={isPrimary ? theme.primary : "#999"}
-                />
-                <ThemedText style={styles.switchText}>Jadikan Alamat Utama</ThemedText>
-            </TouchableOpacity>
+                <View style={styles.formGroup}>
+                    <ThemedText style={styles.label}>Detail Lokasi (Opsional)</ThemedText>
+                    <TextInput
+                        style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                        value={detail}
+                        onChangeText={setDetail}
+                        placeholder="Patokan, warna rumah, dll"
+                        placeholderTextColor="#999"
+                    />
+                </View>
+                <TouchableOpacity
+                    style={styles.switchContainer}
+                    onPress={() => setIsPrimary(!isPrimary)}
+                >
+                    <Ionicons
+                        name={isPrimary ? "checkbox" : "square-outline"}
+                        size={24}
+                        color={isPrimary ? theme.primary : "#999"}
+                    />
+                    <ThemedText style={styles.switchText}>Jadikan Alamat Utama</ThemedText>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-                style={[styles.saveButton, { backgroundColor: theme.primary }]}
-                onPress={handleSave}
-                disabled={loading}
-            >
-                {loading ? (
-                    <ActivityIndicator color="#fff" />
-                ) : (
-                    <ThemedText style={styles.saveButtonText}>Simpan Alamat</ThemedText>
-                )}
-            </TouchableOpacity>
-        </ScrollView>
+                <TouchableOpacity
+                    style={[styles.saveButton, { backgroundColor: theme.primary }]}
+                    onPress={handleSave}
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <ActivityIndicator color="#fff" />
+                    ) : (
+                        <ThemedText style={styles.saveButtonText}>Simpan Alamat</ThemedText>
+                    )}
+                </TouchableOpacity>
+            </ScrollView>
         </ThemedView >
     );
 }
+
+const styles = StyleSheet.create({
+    container: { flex: 1 },
+    content: { padding: 20 },
+    formGroup: { marginBottom: 20 },
+    label: { fontSize: 14, fontWeight: '600', marginBottom: 8 },
+    required: { color: 'red' },
+    input: { borderWidth: 1, borderRadius: 8, padding: 12, fontSize: 14 },
+    textArea: { minHeight: 80 },
+    labelOptions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 8 },
+    chip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, borderWidth: 1, borderColor: '#ccc' },
+    chipText: { fontSize: 12 },
+    switchContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 32 },
+    switchText: { marginLeft: 8 },
+    saveButton: { padding: 16, borderRadius: 12, alignItems: 'center', marginBottom: 40 },
+    saveButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+});
