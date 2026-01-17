@@ -46,3 +46,11 @@ export default function FavoritesScreen() {
         // Reload list untuk memastikan data sinkron (item hilang jika di-unlike)
         loadFavorites();
     };
+
+    return (
+        <ThemedView style={styles.container}>
+            {loading ? (
+                <View style={styles.center}>
+                    <ActivityIndicator size="large" color={theme.primary} />
+                </View>
+            ) : (
