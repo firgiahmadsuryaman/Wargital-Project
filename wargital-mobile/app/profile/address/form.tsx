@@ -17,3 +17,12 @@ export default function AddressFormScreen() {
 
     // Check if we are in edit mode
     const isEditMode = !!params.id;
+
+    const [label, setLabel] = useState((params.label as string) || 'Rumah');
+    const [recipient, setRecipient] = useState((params.recipient as string) || '');
+    const [phone, setPhone] = useState((params.phone as string) || '');
+    const [fullAddress, setFullAddress] = useState((params.fullAddress as string) || '');
+    const [detail, setDetail] = useState((params.detail as string) || '');
+    const [isPrimary, setIsPrimary] = useState(params.isPrimary === 'true');
+
+    const [loading, setLoading] = useState(false);
