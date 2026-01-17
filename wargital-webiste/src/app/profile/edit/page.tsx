@@ -20,3 +20,14 @@ export default function EditProfilePage() {
         name: '',
         phone: '',
     });
+
+    useEffect(() => {
+        if (!isUserLoading && !user) {
+            router.push('/login');
+        } else if (user) {
+            setFormData({
+                name: user.name || '',
+                phone: user.phone || '',
+            });
+        }
+    }, [user, isUserLoading, router]);
