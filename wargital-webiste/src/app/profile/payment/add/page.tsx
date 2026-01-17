@@ -98,3 +98,44 @@ export default function AddPaymentPage() {
                                     </SelectContent>
                                 </Select>
                             </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="accountNumber">Nomor Rekening / HP</Label>
+                                <div className="relative">
+                                    <CreditCard className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                    <Input id="accountNumber" placeholder="1234xxxxxx" className="pl-9 border-gray-200" required />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="accountName">Nama Pemilik Akun</Label>
+                                <Input id="accountName" placeholder="Nama sesuai di buku tabungan/aplikasi" className="border-gray-200" required />
+                            </div>
+
+                            <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50 border border-gray-100">
+                                <Label htmlFor="isPrimary" className="cursor-pointer">Jadikan Utama</Label>
+                                <Switch id="isPrimary" />
+                            </div>
+
+                        </CardContent>
+                        <CardFooter className="flex justify-end pt-4 pb-8 px-6">
+                            <Button type="submit" disabled={isLoading} className="w-full md:w-auto min-w-[150px] shadow-lg shadow-primary/20">
+                                {isLoading ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Menyimpan...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Save className="mr-2 h-4 w-4" />
+                                        Simpan Metode
+                                    </>
+                                )}
+                            </Button>
+                        </CardFooter>
+                    </form>
+                </Card>
+            </div>
+        </div>
+    );
+}
