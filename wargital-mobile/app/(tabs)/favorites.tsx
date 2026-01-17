@@ -10,3 +10,7 @@ import { favoriteService } from '@/services/favoriteService';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
+export default function FavoritesScreen() {
+    const colorScheme = useColorScheme();
+    const theme = Colors[colorScheme ?? 'light'];
+    const router = useRouter();
