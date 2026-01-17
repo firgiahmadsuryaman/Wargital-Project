@@ -13,3 +13,7 @@ export default function EditProfileScreen() {
     const router = useRouter();
     const colorScheme = useColorScheme();
     const theme = Colors[colorScheme ?? 'light'];
+
+    const [name, setName] = useState('Warga Digital');
+    const [phone, setPhone] = useState('081234567890');
+    const [email, setEmail] = useState(user?.email || '');
