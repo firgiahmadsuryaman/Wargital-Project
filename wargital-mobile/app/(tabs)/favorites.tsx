@@ -29,3 +29,9 @@ export default function FavoritesScreen() {
             setRefreshing(false);
         }
     };
+
+    useFocusEffect(
+        useCallback(() => {
+            loadFavorites();
+        }, [])
+    );
