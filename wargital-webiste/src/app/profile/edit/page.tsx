@@ -31,3 +31,20 @@ export default function EditProfilePage() {
             });
         }
     }, [user, isUserLoading, router]);
+
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        try {
+            await apiClient.put('/user/profile', formData);
+            await refreshUser(); // Update context
+            toast.success('Profil berhasil diperbarui');
+            router.push('/profile');
+        } catch (error: any) {
+            console.error(error);
+            toast.error(error.response?.data?.message || 'Gagal memperbarui profil');
+        } finally {
+            setIsLoading(false);
+        }
+    };
