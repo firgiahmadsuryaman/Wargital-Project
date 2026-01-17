@@ -23,3 +23,32 @@ function getUserIdFromRequest(request: Request): string | null {
         return null;
     }
 }
+
+// GET: Ambil profil user
+export async function GET(request: Request) {
+    const userId = getUserIdFromRequest(request);
+    if (!userId) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                phone: true,
+            },
+        });
+
+        if (!user) {
+            return NextResponse.json({ message: 'User tidak ditemukan' }, { status: 404 });
+        }
+
+        return NextResponse.json(user);
+    } catch (error) {
+        console.error('GET Profile Error', error);
+        return NextResponse.json({ message: 'Gagal mengambil profil' }, { status: 500 });
+    }
+}
