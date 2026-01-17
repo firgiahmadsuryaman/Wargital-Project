@@ -1,4 +1,5 @@
 import { StyleSheet, FlatList, View, RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
@@ -123,27 +124,29 @@ export default function FavoritesScreen() {
 
     return (
         <ThemedView style={styles.container}>
-            {/* Tab Header */}
-            <View style={styles.tabContainer}>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'restaurant' && { borderBottomColor: theme.primary }]}
-                    onPress={() => setActiveTab('restaurant')}
-                >
-                    <ThemedText style={[styles.tabText, activeTab === 'restaurant' && { color: theme.primary, fontWeight: 'bold' }]}>
-                        Restoran
-                    </ThemedText>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'menu' && { borderBottomColor: theme.primary }]}
-                    onPress={() => setActiveTab('menu')}
-                >
-                    <ThemedText style={[styles.tabText, activeTab === 'menu' && { color: theme.primary, fontWeight: 'bold' }]}>
-                        Menu
-                    </ThemedText>
-                </TouchableOpacity>
-            </View>
+            <SafeAreaView style={{ flex: 1 }}>
+                {/* Tab Header */}
+                <View style={styles.tabContainer}>
+                    <TouchableOpacity
+                        style={[styles.tabButton, activeTab === 'restaurant' && { borderBottomColor: theme.primary }]}
+                        onPress={() => setActiveTab('restaurant')}
+                    >
+                        <ThemedText style={[styles.tabText, activeTab === 'restaurant' && { color: theme.primary, fontWeight: 'bold' }]}>
+                            Restoran
+                        </ThemedText>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.tabButton, activeTab === 'menu' && { borderBottomColor: theme.primary }]}
+                        onPress={() => setActiveTab('menu')}
+                    >
+                        <ThemedText style={[styles.tabText, activeTab === 'menu' && { color: theme.primary, fontWeight: 'bold' }]}>
+                            Menu
+                        </ThemedText>
+                    </TouchableOpacity>
+                </View>
 
-            {renderContent()}
+                {renderContent()}
+            </SafeAreaView>
         </ThemedView>
     );
 }
