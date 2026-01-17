@@ -49,3 +49,52 @@ export default function AddPaymentPage() {
                     <h1 className="text-2xl font-bold text-gray-900">Tambah Metode Pembayaran</h1>
                     <p className="text-muted-foreground mt-1">Tambahkan rekening bank atau e-wallet baru.</p>
                 </div>
+                <Card className="border-none shadow-xl bg-white/80 backdrop-blur-sm overflow-hidden">
+                    <form onSubmit={onSubmit}>
+                        <CardContent className="space-y-6 pt-6">
+
+                            <div className="space-y-2">
+                                <Label>Jenis Pembayaran</Label>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div
+                                        className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all ${type === 'BANK_TRANSFER' ? 'border-primary bg-primary/5 text-primary' : 'border-gray-100 hover:border-gray-200 bg-gray-50'}`}
+                                        onClick={() => setType('BANK_TRANSFER')}
+                                    >
+                                        <Building2 className="h-6 w-6" />
+                                        <span className="font-medium text-sm">Transfer Bank</span>
+                                    </div>
+                                    <div
+                                        className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all ${type === 'E_WALLET' ? 'border-primary bg-primary/5 text-primary' : 'border-gray-100 hover:border-gray-200 bg-gray-50'}`}
+                                        onClick={() => setType('E_WALLET')}
+                                    >
+                                        <Wallet className="h-6 w-6" />
+                                        <span className="font-medium text-sm">E-Wallet</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="provider">Nama Bank / E-Wallet</Label>
+                                <Select defaultValue="BCA">
+                                    <SelectTrigger className="border-gray-200">
+                                        <SelectValue placeholder="Pilih Provider" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {type === 'BANK_TRANSFER' ? (
+                                            <>
+                                                <SelectItem value="BCA">BCA</SelectItem>
+                                                <SelectItem value="MANDIRI">Mandiri</SelectItem>
+                                                <SelectItem value="BRI">BRI</SelectItem>
+                                                <SelectItem value="BNI">BNI</SelectItem>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <SelectItem value="GOPAY">GoPay</SelectItem>
+                                                <SelectItem value="OVO">OVO</SelectItem>
+                                                <SelectItem value="DANA">DANA</SelectItem>
+                                                <SelectItem value="SHOPEEPAY">ShopeePay</SelectItem>
+                                            </>
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                            </div>
