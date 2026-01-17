@@ -47,3 +47,16 @@ export default function PaymentMethodsPage() {
                     </Button>
                     <h1 className="text-xl font-bold md:hidden">Metode Pembayaran</h1>
                 </div>
+
+                <div className="flex items-center justify-between mb-6">
+                    <div>
+                        <h1 className="text-2xl font-bold hidden md:block">Metode Pembayaran</h1>
+                        <p className="text-muted-foreground">Kelola kartu dan rekening bank Anda.</p>
+                    </div>
+                    <Button asChild className="gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
+                        <Link href="/profile/payment/add">
+                            <Plus className="h-4 w-4" />
+                            Tambah Baru
+                        </Link>
+                    </Button>
+                </div>
