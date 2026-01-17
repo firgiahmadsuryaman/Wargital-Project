@@ -17,15 +17,12 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(request => {
-    console.log('Starting Request', JSON.stringify(request, null, 2));
     return request;
 });
 
 api.interceptors.response.use(response => {
-    console.log('Response:', response.status);
     return response;
 }, error => {
-    console.log('Response Error:', error);
     return Promise.reject(error);
 });
 
