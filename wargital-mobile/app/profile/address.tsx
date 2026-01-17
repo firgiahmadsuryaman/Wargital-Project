@@ -40,3 +40,31 @@ export default function AddressScreen() {
     const colorScheme = useColorScheme();
     const theme = Colors[colorScheme ?? 'light'];
     const [addresses, setAddresses] = useState<Address[]>(DUMMY_ADDRESSES);
+
+    const renderItem = ({ item }: { item: Address }) => (
+        <View style={styles.addressCard}>
+            <View style={styles.cardHeader}>
+                <View style={styles.labelContainer}>
+                    <ThemedText style={styles.addressLabel}>{item.label}</ThemedText>
+                    {item.isPrimary && (
+                        <View style={[styles.primaryBadge, { backgroundColor: '#E8F5E9' }]}>
+                            <ThemedText style={[styles.primaryText, { color: '#2E7D32' }]}>Utama</ThemedText>
+                        </View>
+                    )}
+                </View>
+                <TouchableOpacity>
+                    <ThemedText style={[styles.editText, { color: theme.primary }]}>Ubah</ThemedText>
+                </TouchableOpacity>
+            </View>
+
+            <ThemedText type="defaultSemiBold" style={styles.recipient}>{item.recipient}</ThemedText>
+            <ThemedText style={styles.phone}>{item.phone}</ThemedText>
+            <ThemedText style={styles.address}>{item.fullAddress}</ThemedText>
+
+            {!item.isPrimary && (
+                <TouchableOpacity style={styles.setPrimaryButton}>
+                    <ThemedText style={styles.setPrimaryText}>Jadikan Alamat Utama</ThemedText>
+                </TouchableOpacity>
+            )}
+        </View>
+    );
