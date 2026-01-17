@@ -1,27 +1,85 @@
-import { StyleSheet, View, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Stack, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
+import api from '@/services/api';
 
 export default function EditProfileScreen() {
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
     const router = useRouter();
     const colorScheme = useColorScheme();
     const theme = Colors[colorScheme ?? 'light'];
 
-    const [name, setName] = useState('Warga Digital');
-    const [phone, setPhone] = useState('081234567890');
+    const [name, setName] = useState(user?.name || '');
+    const [phone, setPhone] = useState(user?.phone || '');
     const [email, setEmail] = useState(user?.email || '');
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
-    const handleSave = () => {
-        Alert.alert('Sukses', 'Profil berhasil diperbarui!');
-        router.back();
+    useEffect(() => {
+        fetchProfile();
+    }, []);
+
+    const fetchProfile = async () => {
+        try {
+            setIsLoading(true);
+            const response = await api.get('/user/profile');
+            const userData = response.data;
+            setName(userData.name || '');
+            setPhone(userData.phone || '');
+            setEmail(userData.email || '');
+            // Update context if needed, but data from inputs is separate
+        } catch (error) {
+            console.error('Failed to fetch profile', error);
+            Alert.alert('Error', 'Gagal mengambil data profil');
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+    const handleSave = async () => {
+        if (!name.trim()) {
+            Alert.alert('Peringatan', 'Nama lengkap tidak boleh kosong');
+            return;
+        }
+
+        try {
+            setIsSaving(true);
+            const response = await api.put('/user/profile', {
+                name,
+                phone,
+            });
+
+            // Update local user context
+            await updateUser({
+                ...user!, // Keep existing fields like id
+                ...response.data, // Overwrite with new data
+            });
+
+            Alert.alert('Sukses', 'Profil berhasil diperbarui!', [
+                { text: 'OK', onPress: () => router.back() }
+            ]);
+        } catch (error: any) {
+            console.error('Failed to update profile', error);
+            const message = error.response?.data?.message || 'Gagal memperbarui profil';
+            Alert.alert('Error', message);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    if (isLoading) {
+        return (
+            <ThemedView style={[styles.container, styles.center]}>
+                <ActivityIndicator size="large" color={theme.primary} />
+            </ThemedView>
+        );
+    }
 
     return (
         <ThemedView style={styles.container}>
@@ -75,10 +133,15 @@ export default function EditProfileScreen() {
                 </View>
 
                 <TouchableOpacity
-                    style={[styles.saveButton, { backgroundColor: theme.primary }]}
+                    style={[styles.saveButton, { backgroundColor: theme.primary, opacity: isSaving ? 0.7 : 1 }]}
                     onPress={handleSave}
+                    disabled={isSaving}
                 >
-                    <ThemedText style={styles.saveButtonText}>Simpan Perubahan</ThemedText>
+                    {isSaving ? (
+                        <ActivityIndicator color="#fff" />
+                    ) : (
+                        <ThemedText style={styles.saveButtonText}>Simpan Perubahan</ThemedText>
+                    )}
                 </TouchableOpacity>
             </ScrollView>
         </ThemedView >
@@ -88,6 +151,10 @@ export default function EditProfileScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     content: {
         padding: 20,
@@ -146,6 +213,8 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 12,
         alignItems: 'center',
+        height: 54, // Fixed height to prevent layout jump
+        justifyContent: 'center',
     },
     saveButtonText: {
         color: '#fff',
