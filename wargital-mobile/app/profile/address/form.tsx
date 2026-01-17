@@ -119,3 +119,27 @@ export default function AddressFormScreen() {
                     placeholderTextColor="#999"
                 />
             </View>
+            <View style={styles.formGroup}>
+                <ThemedText style={styles.label}>Alamat Lengkap <ThemedText style={styles.required}>*</ThemedText></ThemedText>
+                <TextInput
+                    style={[styles.input, styles.textArea, { color: theme.text, borderColor: '#e5e5e5' }]}
+                    value={fullAddress}
+                    onChangeText={setFullAddress}
+                    multiline
+                    numberOfLines={3}
+                    placeholder="Nama jalan, nomor rumah, kecamatan, kota..."
+                    placeholderTextColor="#999"
+                    textAlignVertical="top"
+                />
+            </View>
+
+            <View style={styles.formGroup}>
+                <ThemedText style={styles.label}>Detail Lokasi (Opsional)</ThemedText>
+                <TextInput
+                    style={[styles.input, { color: theme.text, borderColor: '#e5e5e5' }]}
+                    value={detail}
+                    onChangeText={setDetail}
+                    placeholder="Patokan, warna rumah, dll"
+                    placeholderTextColor="#999"
+                />
+            </View>
