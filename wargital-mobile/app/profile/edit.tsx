@@ -27,60 +27,60 @@ export default function EditProfileScreen() {
         <ThemedView style={styles.container}>
             <Stack.Screen options={{ title: 'Edit Profil', headerBackTitle: 'Kembali' }} />
 
-            <ScrollView contentContainerStyle={styles.content}></ScrollView>
+            <ScrollView contentContainerStyle={styles.content}>
 
-            <View style={styles.avatarContainer}>
-                <View style={[styles.avatar, { borderColor: theme.primary }]}>
-                    <ThemedText style={styles.avatarText}>
-                        {email.charAt(0).toUpperCase()}
-                    </ThemedText>
-                    <TouchableOpacity style={[styles.editBadge, { backgroundColor: theme.primary }]}>
-                        <Ionicons name="camera" size={14} color="#fff" />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <View style={styles.form}>
-                <View style={styles.inputGroup}>
-                    <ThemedText style={styles.label}>Nama Lengkap</ThemedText>
-                    <TextInput
-                        style={[styles.input, { borderColor: '#e5e5e5', color: theme.text }]}
-                        value={name}
-                        onChangeText={setName}
-                        placeholder="Masukkan nama lengkap"
-                        placeholderTextColor="#999"
-                    />
+                <View style={styles.avatarContainer}>
+                    <View style={[styles.avatar, { borderColor: theme.primary }]}>
+                        <ThemedText style={styles.avatarText}>
+                            {email.charAt(0).toUpperCase()}
+                        </ThemedText>
+                        <TouchableOpacity style={[styles.editBadge, { backgroundColor: theme.primary }]}>
+                            <Ionicons name="camera" size={14} color="#fff" />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-                <View style={styles.inputGroup}>
-                    <ThemedText style={styles.label}>Email</ThemedText>
-                    <TextInput
-                        style={[styles.input, { borderColor: '#e5e5e5', color: '#999', backgroundColor: '#f5f5f5' }]}
-                        value={email}
-                        editable={false}
-                    />
+                <View style={styles.form}>
+                    <View style={styles.inputGroup}>
+                        <ThemedText style={styles.label}>Nama Lengkap</ThemedText>
+                        <TextInput
+                            style={[styles.input, { borderColor: '#e5e5e5', color: theme.text }]}
+                            value={name}
+                            onChangeText={setName}
+                            placeholder="Masukkan nama lengkap"
+                            placeholderTextColor="#999"
+                        />
+                    </View>
+
+                    <View style={styles.inputGroup}>
+                        <ThemedText style={styles.label}>Email</ThemedText>
+                        <TextInput
+                            style={[styles.input, { borderColor: '#e5e5e5', color: '#999', backgroundColor: '#f5f5f5' }]}
+                            value={email}
+                            editable={false}
+                        />
+                    </View>
+
+                    <View style={styles.inputGroup}>
+                        <ThemedText style={styles.label}>Nomor Telepon</ThemedText>
+                        <TextInput
+                            style={[styles.input, { borderColor: '#e5e5e5', color: theme.text }]}
+                            value={phone}
+                            onChangeText={setPhone}
+                            keyboardType="phone-pad"
+                            placeholder="Masukkan nomor telepon"
+                            placeholderTextColor="#999"
+                        />
+                    </View>
                 </View>
 
-                <View style={styles.inputGroup}>
-                    <ThemedText style={styles.label}>Nomor Telepon</ThemedText>
-                    <TextInput
-                        style={[styles.input, { borderColor: '#e5e5e5', color: theme.text }]}
-                        value={phone}
-                        onChangeText={setPhone}
-                        keyboardType="phone-pad"
-                        placeholder="Masukkan nomor telepon"
-                        placeholderTextColor="#999"
-                    />
-                </View>
-            </View>
-
-            <TouchableOpacity
-                style={[styles.saveButton, { backgroundColor: theme.primary }]}
-                onPress={handleSave}
-            >
-                <ThemedText style={styles.saveButtonText}>Simpan Perubahan</ThemedText>
-            </TouchableOpacity>
-        </ScrollView>
+                <TouchableOpacity
+                    style={[styles.saveButton, { backgroundColor: theme.primary }]}
+                    onPress={handleSave}
+                >
+                    <ThemedText style={styles.saveButtonText}>Simpan Perubahan</ThemedText>
+                </TouchableOpacity>
+            </ScrollView>
         </ThemedView >
     );
 }
