@@ -68,3 +68,25 @@ export default function AddressScreen() {
             )}
         </View>
     );
+
+    return (
+        <ThemedView style={styles.container}>
+            <Stack.Screen options={{ title: 'Alamat Tersimpan', headerBackTitle: 'Kembali' }} />
+
+            <FlatList
+                data={addresses}
+                keyExtractor={(item) => item.id}
+                renderItem={renderItem}
+                contentContainerStyle={styles.listContent}
+                ListFooterComponent={
+                    <TouchableOpacity style={[styles.addButton, { borderColor: theme.primary }]}>
+                        <Ionicons name="add" size={20} color={theme.primary} />
+                        <ThemedText style={[styles.addButtonText, { color: theme.primary }]}>
+                            Tambah Alamat Baru
+                        </ThemedText>
+                    </TouchableOpacity>
+                }
+            />
+        </ThemedView>
+    );
+}
