@@ -15,3 +15,19 @@ export default function AddPaymentPage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [type, setType] = useState('BANK_TRANSFER');
+
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        try {
+            await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network
+            alert('Metode pembayaran berhasil ditambahkan (Simulasi)');
+            router.push('/profile/payment');
+        } catch (error) {
+            console.error(error);
+            alert('Gagal menambahkan metode pembayaran');
+        } finally {
+            setIsLoading(false);
+        }
+    };
