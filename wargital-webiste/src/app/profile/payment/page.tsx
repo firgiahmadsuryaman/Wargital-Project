@@ -60,3 +60,40 @@ export default function PaymentMethodsPage() {
                         </Link>
                     </Button>
                 </div>
+                <div className="space-y-4">
+                    {dummyMethods.map((method) => (
+                        <Card key={method.id} className="border-none shadow-md hover:shadow-lg transition-all group overflow-hidden">
+                            <CardContent className="p-0">
+                                <div className="flex items-center p-6 gap-4">
+                                    <div className={`p-3 rounded-xl ${method.type === 'BANK_TRANSFER' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+                                        {method.type === 'BANK_TRANSFER' ? <CreditCard className="h-6 w-6" /> : <Wallet className="h-6 w-6" />}
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-2">
+                                            <h3 className="font-bold text-lg">{method.provider}</h3>
+                                            {method.isPrimary && (
+                                                <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                                                    Utama
+                                                </span>
+                                            )}
+                                        </div>
+                                        <p className="text-muted-foreground font-mono tracking-wider mt-1">{method.accountNumber}</p>
+                                        <p className="text-xs text-muted-foreground mt-1">a.n {method.accountName}</p>
+                                    </div>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-all"
+                                        onClick={() => handleDelete(method.id)}
+                                    >
+                                        <Trash2 className="h-5 w-5" />
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
