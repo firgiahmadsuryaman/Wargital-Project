@@ -28,3 +28,14 @@ export default function EditProfileScreen() {
             <Stack.Screen options={{ title: 'Edit Profil', headerBackTitle: 'Kembali' }} />
 
             <ScrollView contentContainerStyle={styles.content}></ScrollView>
+
+            <View style={styles.avatarContainer}>
+                <View style={[styles.avatar, { borderColor: theme.primary }]}>
+                    <ThemedText style={styles.avatarText}>
+                        {email.charAt(0).toUpperCase()}
+                    </ThemedText>
+                    <TouchableOpacity style={[styles.editBadge, { backgroundColor: theme.primary }]}>
+                        <Ionicons name="camera" size={14} color="#fff" />
+                    </TouchableOpacity>
+                </View>
+            </View>
